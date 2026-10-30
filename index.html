@@ -327,64 +327,7 @@
           <div id="logoTiltBox" onmousemove="tiltLogo(event)" onmouseleave="resetTilt()" class="tilt-inner aura-silver relative w-[280px] sm:w-[360px] aspect-square flex items-center justify-center select-none" title="Passe o mouse para inclinar em 3D" style="transform: rotateX(0deg) rotateY(0deg) scale(1);">
 
             <div class="animate-float relative w-full h-full flex items-center justify-center">
-              <!-- Imagem PNG transparente padrão; se não carregar, exibe o SVG de fallback abaixo -->
-              <img id="morganLogoImg" src="./logo3ideia4.png" alt="Morgan Tattoo Logo Oficial" class="w-full h-full object-contain relative z-20" onload="document.getElementById('fallbackTransparentSvg').style.display='none';" onerror="this.style.display='none'; document.getElementById('fallbackTransparentSvg').style.display='block';">
-
-              <!-- Fallback Vetorial Transparente Fiel -->
-              <svg id="fallbackTransparentSvg" viewBox="0 0 500 500" class="w-full h-full relative z-10" style="display: none;">
-                <defs>
-                  <radialgradient id="innerMoon" cx="50%" cy="48%" r="50%">
-                    <stop offset="0%" stop-color="#FFFFFF"></stop>
-                    <stop offset="72%" stop-color="#F2F2F6"></stop>
-                    <stop offset="100%" stop-color="#A6A6B4"></stop>
-                  </radialgradient>
-                  <clippath id="medallionClip">
-                    <circle cx="250" cy="250" r="154"></circle>
-                  </clippath>
-                </defs>
-
-                <!-- Anel de 56 Espinhos Góticos Pretos com Fundo 100% Transparente -->
-                <circle cx="250" cy="250" r="168" fill="#050507"></circle>
-                <circle cx="250" cy="250" r="184" fill="none" stroke="#050507" stroke-width="32" stroke-dasharray="5.2 15.4"></circle>
-                <circle cx="250" cy="250" r="196" fill="none" stroke="#050507" stroke-width="16" stroke-dasharray="2.5 19.3"></circle>
-                <circle cx="250" cy="250" r="160" fill="none" stroke="#B8B8C4" stroke-width="6" stroke-dasharray="12 6"></circle>
-
-                <!-- Círculo Interno com Nuvens Orientais e Musa Élfica Alada -->
-                <circle cx="250" cy="250" r="154" fill="url(#innerMoon)"></circle>
-                <g clip-path="url(#medallionClip)">
-                  <!-- Nuvens Orientais -->
-                  <g fill="rgba(150,150,165,0.28)" stroke="#14141A" stroke-width="2.2" stroke-linecap="round">
-                    <path d="M115 210 C102 190, 118 168, 142 174 C150 150, 182 146, 198 164 C212 142, 242 146, 250 165"></path>
-                    <path d="M108 255 C95 235, 112 214, 136 220 C150 206, 176 216, 176 236 C176 254, 152 260, 138 248"></path>
-                    <path d="M265 118 C285 102, 318 110, 325 132 C348 128, 366 148, 355 168"></path>
-                    <path d="M142 365 C164 322, 196 320, 206 358" fill="none"></path>
-                  </g>
-                  <!-- Asas de Morcego -->
-                  <path d="M206 202 L145 274 L138 302 C154 292, 168 302, 172 326 C182 302, 196 300, 206 318 Z" fill="#050507" stroke="#FFF" stroke-width="1.8"></path>
-                  <path d="M278 196 L354 280 C340 276, 330 288, 328 316 C316 288, 298 284, 282 298 Z" fill="#050507" stroke="#FFF" stroke-width="1.8"></path>
-                  <!-- Orbe Negro do Eclipse -->
-                  <circle cx="278" cy="136" r="16" fill="#050507" stroke="#FFF" stroke-width="2"></circle>
-                  <!-- Braço e Mão Delicada Erguida -->
-                  <path d="M272 198 L344 218 C350 220, 352 212, 346 205 L306 166 L310 146 L304 128 L298 144 L294 126 L288 146 L285 162 L322 204 L276 188 Z" fill="#FFF" stroke="#050507" stroke-width="2" stroke-linejoin="round"></path>
-                  <!-- Cabelo, Rosto de Perfil com Orelha Élfica e Vestido Gótico -->
-                  <path d="M204 162 C202 126, 228 115, 254 124 C268 128, 275 142, 270 156 L268 280 L204 280 Z" fill="#050507"></path>
-                  <!-- Mechas de brilho branco no cabelo -->
-                  <path d="M210 160 L215 142 L220 158 L225 140 L230 156" fill="none" stroke="#FFF" stroke-width="2.2" stroke-linecap="round"></path>
-                  <!-- Perfil do rosto e orelha pontuda -->
-                  <path d="M236 150 C250 148, 264 152, 272 158 L268 165 L278 170 L272 176 L275 182 L270 188 C260 192, 248 190, 240 186 L244 215 L222 215 Z" fill="#FFF" stroke="#050507" stroke-width="2"></path>
-                  <path d="M236 176 L202 186 L232 192 Z" fill="#FFF" stroke="#050507" stroke-width="2"></path>
-                  <!-- Vestido e Dentes na Base -->
-                  <path d="M204 208 L280 208 L306 406 L198 406 Z" fill="#050507"></path>
-                  <path d="M222 202 L218 308 L280 308 L258 204" fill="none" stroke="#FFF" stroke-width="2"></path>
-                  <path d="M200 400 L206 374 L212 402 L220 370 L228 404 L236 368 L244 404 L252 368 L260 404 L268 370 L276 402 L284 374 L290 400" fill="#050507" stroke="#FFF" stroke-width="2"></path>
-                </g>
-
-                <!-- Faixa Branca Central com "m o r g a n   t a t t o o" -->
-                <rect x="10" y="228" width="480" height="42" fill="#FFFFFF" rx="1"></rect>
-                <text x="252" y="256" text-anchor="middle" fill="#000000" font-family="'Cormorant Garamond', Georgia, serif" font-size="33" font-weight="500" letter-spacing="9.5">
-                  morgan&nbsp;&nbsp;tattoo
-                </text>
-              </svg>
+              <img id="morganLogoImg" src="./logo3ideia4.png" alt="Morgan Tattoo Logo Oficial" class="w-full h-full object-contain relative z-20">
             </div>
 
           </div>
@@ -924,46 +867,11 @@
 
 
     // 3. Dados dos Flashes e Portfólio
-    const DEFAULT_FLASHES = [
-      {
-        id: 'FL-1793314448778',
-        title: 'Tramp Stamp Cybertribal',
-        cat: 'sigil',
-        cm: 25,
-        price: 500,
-        zone: 'Lombar',
-        image: './costasideia2.png',
-        desc: ''
-      },
-      {
-        id: 'FL-01', title: 'Musa do Eclipse & Nuvens', cat: 'mistico', cm: 20, price: 680, zone: 'Antebraço',
-        svg: `<svg viewBox="0 0 160 160" class="w-36 h-36"><circle cx="80" cy="80" r="62" fill="none" stroke="#070709" stroke-width="4" stroke-dasharray="3 4"/><circle cx="96" cy="52" r="9" fill="#070709"/><path d="M40 95 L68 76 L58 118 Z M120 95 L92 76 L102 118 Z" fill="#070709"/><path d="M65 62 C65 48, 86 48, 90 60 L95 132 L62 132 Z" fill="#070709"/></svg>`
-      },
-      {
-        id: 'FL-02', title: 'Serafim de Seis Asas', cat: 'mistico', cm: 22, price: 740, zone: 'Esterno / Costelas',
-        svg: `<svg viewBox="0 0 160 160" class="w-36 h-36"><path d="M76 68 C50 30, 20 28, 16 56 C38 56, 55 68, 76 78 Z M84 68 C110 30, 140 28, 144 56 C122 56, 105 68, 84 78 Z" fill="#070709"/><path d="M74 84 C42 78, 16 88, 12 112 C40 102, 58 98, 76 90 Z M86 84 C118 78, 144 88, 148 112 C120 102, 102 98, 84 90 Z" fill="#070709"/><circle cx="80" cy="80" r="18" fill="#F4F4F6" stroke="#070709" stroke-width="3"/><circle cx="80" cy="80" r="6" fill="#070709"/></svg>`
-      },
-      {
-        id: 'FL-03', title: 'Olhar da Bruxa Dark Mangá', cat: 'anime', cm: 14, price: 490, zone: 'Antebraço',
-        svg: `<svg viewBox="0 0 160 160" class="w-36 h-36"><rect x="18" y="54" width="124" height="52" fill="none" stroke="#070709" stroke-width="3"/><path d="M32 80 Q52 66 72 80 Q52 90 32 80 Z M88 80 Q108 66 128 80 Q108 90 88 80 Z" fill="#070709"/><circle cx="52" cy="79" r="5" fill="#F4F4F6"/><circle cx="108" cy="79" r="5" fill="#F4F4F6"/></svg>`
-      },
-      {
-        id: 'FL-04', title: 'Mariposa Death-Head', cat: 'blackwork', cm: 16, price: 540, zone: 'Esterno / Costelas',
-        svg: `<svg viewBox="0 0 160 160" class="w-36 h-36"><path d="M76 76 L18 44 C14 70, 30 92, 72 92 Z M84 76 L142 44 C146 70, 130 92, 88 92 Z" fill="#070709"/><ellipse cx="80" cy="88" rx="9" ry="24" fill="#070709"/><circle cx="80" cy="76" r="5" fill="#F4F4F6"/></svg>`
-      },
-      {
-        id: 'FL-05', title: 'Espada Catedral Gótica', cat: 'sigil', cm: 25, price: 650, zone: 'Costas / Coluna',
-        svg: `<svg viewBox="0 0 160 160" class="w-36 h-36"><polygon points="80,14 74,110 80,148 86,110" fill="#070709"/><path d="M36 52 Q60 62 80 56 Q100 62 124 52 Q100 70 80 64 Q60 70 36 52 Z" fill="#070709"/></svg>`
-      },
-      {
-        id: 'FL-06', title: 'Lírio-Aranha (Higanbana)', cat: 'anime', cm: 18, price: 560, zone: 'Panturrilha / Canela',
-        svg: `<svg viewBox="0 0 160 160" class="w-36 h-36"><line x1="80" y1="75" x2="80" y2="148" stroke="#070709" stroke-width="4"/><path d="M80 75 C58 35, 28 26, 18 48 M80 75 C102 35, 132 26, 142 48 M80 75 C65 25, 42 15, 34 35 M80 75 C95 25, 118 15, 126 35" fill="none" stroke="#070709" stroke-width="3" stroke-linecap="round"/><circle cx="80" cy="75" r="12" fill="#070709"/></svg>`
-      }
-    ];
+    const DEFAULT_FLASHES = [];
 
     let FLASHES = (() => {
       try {
-        const saved = JSON.parse(localStorage.getItem('morgan_flashes_v2'));
+        const saved = JSON.parse(localStorage.getItem('morgan_flashes_v3'));
         return (Array.isArray(saved) && saved.length > 0) ? saved : DEFAULT_FLASHES;
       } catch (error) {
         console.warn('Não foi possível carregar os flashes salvos:', error);
@@ -973,7 +881,7 @@
 
     function persistFlashes() {
       try {
-        localStorage.setItem('morgan_flashes_v2', JSON.stringify(FLASHES));
+        localStorage.setItem('morgan_flashes_v3', JSON.stringify(FLASHES));
       } catch (error) {
         alert('Não foi possível salvar. Verifique o espaço disponível no navegador.');
         console.error(error);
