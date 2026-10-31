@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -110,24 +110,76 @@
     .page-section {
       min-height: 80vh;
     }
+      /* Animação dos Corações Góticos */
+    @keyframes floatHeart {
+      0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1) rotate(0deg);
+      }
+      50% {
+        opacity: 0.9;
+        transform: translate(var(--tw-x, 20px), -60px) scale(1.35) rotate(15deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(calc(var(--tw-x, 20px) * 1.8), -140px) scale(0.6) rotate(-20deg);
+      }
+    }
+    .goth-heart-particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 100;
+      user-select: none;
+      animation: floatHeart 1.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+      filter: drop-shadow(0 0 6px rgba(255,255,255,0.4));
+    }
+    /* Estilos do Zoom / Pan no Lightbox */
+    .zoom-container {
+      overflow: hidden;
+      position: relative;
+      touch-action: none;
+    }
+    .zoom-target {
+      transition: transform 0.15s ease-out;
+      transform-origin: center center;
+    }
+    .zoom-grab {
+      cursor: grab;
+    }
+    .zoom-grabbing {
+      cursor: grabbing;
+    }
   </style>
   <style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:"Plus Jakarta Sans", sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:"JetBrains Mono", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0px}.bottom-4{bottom:1rem}.right-4{right:1rem}.top-0{top:0px}.top-3{top:0.75rem}.z-10{z-index:10}.z-20{z-index:20}.z-50{z-index:50}.z-\[70\]{z-index:70}.z-\[80\]{z-index:80}.mx-auto{margin-left:auto;margin-right:auto}.my-2{margin-top:0.5rem;margin-bottom:0.5rem}.mb-1{margin-bottom:0.25rem}.mb-10{margin-bottom:2.5rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mt-1{margin-top:0.25rem}.mt-2{margin-top:0.5rem}.block{display:block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.aspect-square{aspect-ratio:1 / 1}.h-2{height:0.5rem}.h-72{height:18rem}.h-\[310px\]{height:310px}.h-full{height:100%}.h-48{height:12rem}.max-h-\[92vh\]{max-height:92vh}.w-2{width:0.5rem}.w-72{width:18rem}.w-\[280px\]{width:280px}.w-\[310px\]{width:310px}.w-full{width:100%}.min-w-0{min-width:0px}.max-w-3xl{max-width:48rem}.max-w-4xl{max-width:56rem}.max-w-6xl{max-width:72rem}.max-w-xl{max-width:36rem}.shrink-0{flex-shrink:0}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;user-select:none}.select-all{-webkit-user-select:all;user-select:all}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-2{gap:0.5rem}.gap-2\.5{gap:0.625rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-5{gap:1.25rem}.gap-6{gap:1.5rem}.gap-8{gap:2rem}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.self-start{align-self:flex-start}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.scroll-smooth{scroll-behavior:smooth}.whitespace-nowrap{white-space:nowrap}.whitespace-pre-wrap{white-space:pre-wrap}.break-words{overflow-wrap:break-word}.break-all{word-break:break-all}.rounded{border-radius:0.25rem}.rounded-full{border-radius:9999px}.rounded-sm{border-radius:0.125rem}.border{border-width:1px}.border-2{border-width:2px}.border-b{border-bottom-width:1px}.border-l{border-left-width:1px}.border-alabaster{--tw-border-opacity:1;border-color:rgb(244 244 246 / var(--tw-border-opacity, 1))}.border-emerald-400\/40{border-color:rgb(52 211 153 / 0.4)}.border-white\/10{border-color:rgb(255 255 255 / 0.1)}.border-white\/15{border-color:rgb(255 255 255 / 0.15)}.border-white\/20{border-color:rgb(255 255 255 / 0.2)}.border-white\/25{border-color:rgb(255 255 255 / 0.25)}.border-red-400\/40{border-color:rgb(248 113 113 / 0.4)}.bg-alabaster{--tw-bg-opacity:1;background-color:rgb(244 244 246 / var(--tw-bg-opacity, 1))}.bg-black\/85{background-color:rgb(0 0 0 / 0.85)}.bg-charcoal{--tw-bg-opacity:1;background-color:rgb(16 16 21 / var(--tw-bg-opacity, 1))}.bg-charcoal\/30{background-color:rgb(16 16 21 / 0.3)}.bg-charcoal\/40{background-color:rgb(16 16 21 / 0.4)}.bg-charcoal\/90{background-color:rgb(16 16 21 / 0.9)}.bg-charcoal\/95{background-color:rgb(16 16 21 / 0.95)}.bg-emerald-400{--tw-bg-opacity:1;background-color:rgb(52 211 153 / var(--tw-bg-opacity, 1))}.bg-emerald-500\/10{background-color:rgb(16 185 129 / 0.1)}.bg-obsidian{--tw-bg-opacity:1;background-color:rgb(7 7 9 / var(--tw-bg-opacity, 1))}.bg-obsidian\/95{background-color:rgb(7 7 9 / 0.95)}.bg-white\/10{background-color:rgb(255 255 255 / 0.1)}.bg-white\/20{background-color:rgb(255 255 255 / 0.2)}.bg-gradient-to-b{background-image:linear-gradient(to bottom, var(--tw-gradient-stops))}.from-alabaster{--tw-gradient-from:#F4F4F6 var(--tw-gradient-from-position);--tw-gradient-to:rgb(244 244 246 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.to-\[\#CFCFD8\]{--tw-gradient-to:#CFCFD8 var(--tw-gradient-to-position)}.object-contain{object-fit:contain}.p-2\.5{padding:0.625rem}.p-3{padding:0.75rem}.p-3\.5{padding:0.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.py-16{padding-top:4rem;padding-bottom:4rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-3\.5{padding-top:0.875rem;padding-bottom:0.875rem}.py-4{padding-top:1rem;padding-bottom:1rem}.pb-14{padding-bottom:3.5rem}.pb-4{padding-bottom:1rem}.pl-3{padding-left:0.75rem}.pt-2{padding-top:0.5rem}.pt-6{padding-top:1.5rem}.text-left{text-align:left}.text-center{text-align:center}.font-mono{font-family:"JetBrains Mono", monospace}.font-serif{font-family:"Cormorant Garamond", Georgia, serif}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-light{font-weight:300}.font-normal{font-weight:400}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.lowercase{text-transform:lowercase}.italic{font-style:italic}.leading-relaxed{line-height:1.625}.leading-tight{line-height:1.25}.tracking-\[0\.16em\]{letter-spacing:0.16em}.tracking-\[0\.18em\]{letter-spacing:0.18em}.tracking-\[0\.22em\]{letter-spacing:0.22em}.tracking-wider{letter-spacing:0.05em}.tracking-widest{letter-spacing:0.1em}.text-alabaster{--tw-text-opacity:1;color:rgb(244 244 246 / var(--tw-text-opacity, 1))}.text-alabaster\/80{color:rgb(244 244 246 / 0.8)}.text-alabaster\/90{color:rgb(244 244 246 / 0.9)}.text-mist{--tw-text-opacity:1;color:rgb(154 154 168 / var(--tw-text-opacity, 1))}.text-obsidian{--tw-text-opacity:1;color:rgb(7 7 9 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-white\/85{color:rgb(255 255 255 / 0.85)}.text-red-300{--tw-text-opacity:1;color:rgb(252 165 165 / var(--tw-text-opacity, 1))}.underline{-webkit-text-decoration-line:underline;text-decoration-line:underline}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.accent-alabaster{accent-color:#F4F4F6}.opacity-45{opacity:0.45}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-\[0_16px_40px_rgba\(0\2c 0\2c 0\2c 0\.85\)\]{--tw-shadow:0 16px 40px rgba(0,0,0,0.85);--tw-shadow-colored:0 16px 40px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.blur-3xl{--tw-blur:blur(64px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur{--tw-backdrop-blur:blur(8px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-xl{--tw-backdrop-blur:blur(24px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-500{transition-duration:500ms}.duration-300{transition-duration:300ms}.selection\:bg-alabaster *::selection{--tw-bg-opacity:1;background-color:rgb(244 244 246 / var(--tw-bg-opacity, 1))}.selection\:text-obsidian *::selection{--tw-text-opacity:1;color:rgb(7 7 9 / var(--tw-text-opacity, 1))}.selection\:bg-alabaster::selection{--tw-bg-opacity:1;background-color:rgb(244 244 246 / var(--tw-bg-opacity, 1))}.selection\:text-obsidian::selection{--tw-text-opacity:1;color:rgb(7 7 9 / var(--tw-text-opacity, 1))}.hover\:border-alabaster:hover{--tw-border-opacity:1;border-color:rgb(244 244 246 / var(--tw-border-opacity, 1))}.hover\:border-white\/45:hover{border-color:rgb(255 255 255 / 0.45)}.hover\:bg-ash:hover{--tw-bg-opacity:1;background-color:rgb(35 35 46 / var(--tw-bg-opacity, 1))}.hover\:bg-white:hover{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.hover\:bg-red-950\/40:hover{background-color:rgb(69 10 10 / 0.4)}.hover\:bg-white\/10:hover{background-color:rgb(255 255 255 / 0.1)}.hover\:text-alabaster:hover{--tw-text-opacity:1;color:rgb(244 244 246 / var(--tw-text-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.hover\:underline:hover{-webkit-text-decoration-line:underline;text-decoration-line:underline}.focus\:border-alabaster:focus{--tw-border-opacity:1;border-color:rgb(244 244 246 / var(--tw-border-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.group:hover .group-hover\:scale-105{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@media (min-width: 640px){.sm\:col-span-2{grid-column:span 2 / span 2}.sm\:h-96{height:24rem}.sm\:h-\[400px\]{height:400px}.sm\:w-96{width:24rem}.sm\:w-\[360px\]{width:360px}.sm\:w-\[400px\]{width:400px}.sm\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.sm\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.sm\:flex-row{flex-direction:row}.sm\:items-end{align-items:flex-end}.sm\:items-center{align-items:center}.sm\:p-6{padding:1.5rem}.sm\:px-3{padding-left:0.75rem;padding-right:0.75rem}.sm\:px-5{padding-left:1.25rem;padding-right:1.25rem}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:text-4xl{font-size:2.25rem;line-height:2.5rem}.sm\:text-5xl{font-size:3rem;line-height:1}.sm\:text-base{font-size:1rem;line-height:1.5rem}.sm\:text-sm{font-size:0.875rem;line-height:1.25rem}}@media (min-width: 1024px){.lg\:col-span-5{grid-column:span 5 / span 5}.lg\:col-span-7{grid-column:span 7 / span 7}.lg\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.lg\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.lg\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}}</style>
 </head>
 <body class="antialiased selection:bg-alabaster selection:text-obsidian">
 
-  <!-- Modal Lightbox para expandir imagens (Flashes e Portfólio) -->
-  <div id="imageLightboxModal" class="fixed inset-0 z-[90] bg-black/90 backdrop-blur-md p-4 sm:p-8 flex items-center justify-center hidden" onclick="closeLightbox(event)">
-    <button type="button" onclick="closeLightbox(null, true)" aria-label="Fechar visualização" class="absolute top-4 right-4 sm:top-6 sm:right-6 text-alabaster/70 hover:text-white text-3xl sm:text-4xl px-3 py-1 bg-charcoal/80 border border-white/20 rounded-full transition z-10 flex items-center justify-center">
-      ×
+  <!-- Modal Lightbox para expandir imagens (Flashes e Portfólio com Zoom & Pan) -->
+  <div id="imageLightboxModal" class="fixed inset-0 z-[90] bg-black/95 backdrop-blur-md p-3 sm:p-6 flex items-center justify-center hidden" onclick="closeLightbox(event)">
+    <button type="button" onclick="closeLightbox(null, true)" aria-label="Fechar visualização" class="absolute top-3 right-3 sm:top-6 sm:right-6 text-alabaster/70 hover:text-white text-2xl sm:text-3xl w-10 h-10 bg-charcoal/90 border border-white/20 rounded-full transition z-20 flex items-center justify-center shadow-xl">
+      ✕
     </button>
-    <div class="relative max-w-5xl max-h-[90vh] flex flex-col items-center justify-center" onclick="event.stopPropagation()">
-      <div id="lightboxMediaContainer" class="flex items-center justify-center max-h-[75vh] w-auto overflow-hidden rounded-sm border border-white/20 shadow-2xl p-3 sm:p-5 transition-all">
-        <!-- Imagem ou SVG expandido dinamicamente -->
+    <div class="relative w-full max-w-5xl max-h-[94vh] flex flex-col items-center justify-center" onclick="event.stopPropagation()">
+      
+      <!-- Container com zoom & pan -->
+      <div class="relative w-full flex items-center justify-center">
+        <!-- Barra de controles de zoom flutuante -->
+        <div class="absolute top-3 right-3 z-20 flex items-center gap-1.5 bg-charcoal/90 border border-white/20 rounded px-2 py-1 text-xs font-mono shadow-2xl backdrop-blur">
+          <button type="button" onclick="adjustLightboxZoom(0.3)" class="w-7 h-7 flex items-center justify-center hover:bg-white/10 rounded text-alabaster font-bold" title="Aumentar Zoom (Scroll cima)">+</button>
+          <span id="lightboxZoomLevel" class="px-1 text-[11px] text-mist min-w-[3rem] text-center">100%</span>
+          <button type="button" onclick="adjustLightboxZoom(-0.3)" class="w-7 h-7 flex items-center justify-center hover:bg-white/10 rounded text-alabaster font-bold" title="Diminuir Zoom (Scroll baixo)">−</button>
+          <button type="button" onclick="resetLightboxZoom()" class="px-2 h-7 flex items-center justify-center hover:bg-white/10 rounded text-mist hover:text-alabaster text-[10px] uppercase tracking-wider" title="Resetar Zoom">reset</button>
+        </div>
+
+        <div id="lightboxMediaContainer" class="zoom-container flex items-center justify-center max-h-[72vh] w-auto overflow-hidden rounded-sm border border-white/20 shadow-2xl p-2 sm:p-4 transition-all">
+          <!-- Imagem ou SVG com zoom e arrasto interativo -->
+        </div>
       </div>
-      <div class="mt-4 text-center max-w-2xl px-2">
-        <h3 id="lightboxTitle" class="font-serif text-xl sm:text-2xl text-alabaster font-semibold"></h3>
+
+      <div class="mt-3 text-center max-w-2xl px-2">
+        <h3 id="lightboxTitle" class="font-serif text-lg sm:text-2xl text-alabaster font-semibold"></h3>
         <p id="lightboxSubtitle" class="text-xs sm:text-sm text-mist font-mono mt-1 break-words"></p>
-        <div id="lightboxAction" class="mt-3"></div>
+        <div id="lightboxAction" class="mt-2.5"></div>
       </div>
     </div>
   </div>
@@ -276,6 +328,20 @@
           <p class="text-[10px] text-mist">Fotos do PC ficam salvas em base64 no navegador (pode ocupar espaço). Links externos dependem do servidor de origem.</p>
         </form>
 
+        <!-- Gerenciamento de Reviews no Admin -->
+        <div class="border-t border-white/15 pt-5">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h3 class="font-serif text-xl text-alabaster">Depoimentos / Avaliações</h3>
+              <p class="text-[11px] text-mist mt-0.5">Gerencie ou remova comentários e avaliações de clientes.</p>
+            </div>
+            <span id="adminReviewsCount" class="text-xs font-mono navy-glow-text">0 reviews</span>
+          </div>
+          <div id="adminReviewsList" class="space-y-2 max-h-60 overflow-y-auto">
+            <!-- Gerado via JavaScript -->
+          </div>
+        </div>
+
         <div>
           <div class="flex items-center justify-between mb-3">
             <h3 class="font-serif text-xl text-alabaster">Posts do portfólio</h3>
@@ -294,7 +360,45 @@
        PÁGINA 1: #home (Página Inicial: Portfólio + Sobre Mim + Locais)
   ==================================================================== -->
   <section id="page-home" class="page-section">
-    <!-- BARRA DE STATUS SUPERIOR -->
+      <!-- WIDGET FLUTUANTE: SPOTIFY PLAYER DISCRETO (Com alternador de som) -->
+  <div id="spotifyFloatingWidget" class="fixed bottom-4 left-4 z-[70] flex flex-col items-start gap-2">
+    <!-- Card do Player recolhível -->
+    <div id="spotifyPlayerCard" class="hidden bg-charcoal/95 border border-white/20 rounded-sm shadow-2xl p-2.5 backdrop-blur-xl w-[280px] sm:w-[320px] transition-all">
+      <div class="flex items-center justify-between pb-2 border-b border-white/10 text-xs font-mono">
+        <div class="flex items-center gap-1.5 text-alabaster">
+          <svg class="w-4 h-4 text-[#1DB954]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+          <span class="font-semibold uppercase tracking-wider text-[10px]">Trilha Sonora</span>
+        </div>
+        <button type="button" onclick="toggleSpotifyWidget(false)" class="text-mist hover:text-white text-base px-1">✕</button>
+      </div>
+      <!-- Embed Player oficial do Spotify com dark synth/ambient -->
+      <div class="mt-2 rounded overflow-hidden bg-black/50">
+        <iframe id="spotifyIframe" style="border-radius:10px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DXdLEN7aqioXM?utm_source=generator&theme=0" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      </div>
+      <p class="text-[10px] font-mono text-mist mt-1.5 text-center">Clique no play do Spotify para ouvir enquanto navega.</p>
+    </div>
+
+    <!-- Botão Pill de abertura rápida da música -->
+    <button type="button" onclick="toggleSpotifyWidget()" class="flex items-center gap-2 px-3 py-2 bg-charcoal/90 border border-white/20 text-alabaster rounded-sm shadow-xl hover:bg-ash text-xs font-mono transition group">
+      <span class="w-2 h-2 rounded-full bg-[#1DB954] animate-pulse"></span>
+      <span class="flex items-center gap-1.5">
+        <svg class="w-3.5 h-3.5 text-mist group-hover:text-alabaster" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+        <span class="text-[11px]">Trilha Sonora</span>
+      </span>
+      <span id="spotifyBadgeState" class="text-[9px] bg-white/10 px-1.5 py-0.5 rounded text-mist">ouvir</span>
+    </button>
+  </div>
+
+  <!-- WIDGET FLUTUANTE: "ESTIVE AQUI" (Corações Góticos & Contador) -->
+  <div class="fixed bottom-4 right-48 sm:right-56 z-[70]">
+    <button type="button" id="gothHeartBtn" onclick="spawnGothHeart(event)" class="flex items-center gap-2 px-3 py-2 bg-charcoal/90 border border-white/20 text-alabaster rounded-sm shadow-xl hover:bg-ash text-xs font-mono transition active:scale-95 group" title="Deixe sua energia aqui 🖤">
+      <span class="text-sm group-hover:scale-125 transition-transform">🖤</span>
+      <span class="text-[11px] hidden sm:inline text-mist group-hover:text-alabaster">estive aqui:</span>
+      <span id="gothHeartCount" class="font-bold navy-glow-text text-xs">0</span>
+    </button>
+  </div>
+
+  <!-- BARRA DE STATUS SUPERIOR -->
     <div class="bg-charcoal/90 border-b border-white/10 py-2 px-4 text-[11px] font-mono">
       <div class="max-w-6xl mx-auto flex items-center justify-between">
         <div class="flex items-center gap-2 text-alabaster">
@@ -420,6 +524,69 @@
             <!-- FIM DOS LOCAIS EDITÁVEIS -->
           </div>
         </div>
+      </div>
+    </div>
+
+        <!-- SEÇÃO DE REVIEWS & DEPOIMENTOS DE CLIENTES -->
+    <div id="reviews" class="py-16 px-4 border-b border-white/10 bg-charcoal/30">
+      <div class="max-w-6xl mx-auto">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+          <div>
+            <span class="text-xs font-mono text-mist uppercase tracking-widest">// depoimentos</span>
+            <h2 class="font-serif text-3xl sm:text-4xl text-alabaster mt-1">Experiências na Pele</h2>
+            <p class="text-mist text-sm mt-1">O que quem já passou pela agulha da Morgan diz sobre a sessão e cicatrização.</p>
+          </div>
+          <button type="button" onclick="toggleReviewModal(true)" class="self-start px-4 py-2.5 rounded-sm bg-alabaster hover:bg-white text-obsidian text-xs font-mono font-semibold transition flex items-center gap-1.5 shadow-lg">
+            <span>✦ DEIXAR MINHA AVALIAÇÃO</span>
+          </button>
+        </div>
+
+        <!-- Grid de Reviews -->
+        <div id="reviewsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <!-- Gerado dinamicamente via JavaScript -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para cliente deixar avaliação -->
+    <div id="newReviewModal" class="fixed inset-0 z-[85] bg-black/85 backdrop-blur-sm p-4 flex items-center justify-center hidden" onclick="toggleReviewModal(false)">
+      <div class="w-full max-w-lg bg-obsidian border border-white/20 p-6 rounded-sm shadow-2xl relative" onclick="event.stopPropagation()">
+        <div class="flex items-center justify-between pb-3 border-b border-white/15">
+          <div>
+            <span class="text-[10px] font-mono navy-glow-text uppercase tracking-widest">// sua experiência</span>
+            <h3 class="font-serif text-2xl text-alabaster">Avaliar Tattoo & Sessão</h3>
+          </div>
+          <button type="button" onclick="toggleReviewModal(false)" class="text-mist hover:text-white text-2xl px-1">✕</button>
+        </div>
+
+        <form id="publicReviewForm" onsubmit="submitPublicReview(event)" class="mt-4 space-y-4">
+          <div>
+            <label class="block text-xs font-mono uppercase text-mist mb-1">Seu Nome / @ do Insta *</label>
+            <input id="reviewAuthor" required maxlength="50" class="w-full bg-charcoal border border-white/15 rounded-sm p-2.5 text-sm text-alabaster focus:border-alabaster focus:outline-none" placeholder="Ex: Lucas / @lucas.art">
+          </div>
+          <div>
+            <label class="block text-xs font-mono uppercase text-mist mb-1">Tattoo Feita *</label>
+            <input id="reviewTattoo" required maxlength="70" class="w-full bg-charcoal border border-white/15 rounded-sm p-2.5 text-sm text-alabaster focus:border-alabaster focus:outline-none" placeholder="Ex: Ceifador no antebraço / Flash 1:1">
+          </div>
+          <div>
+            <label class="block text-xs font-mono uppercase text-mist mb-1">Avaliação *</label>
+            <div class="flex items-center gap-2">
+              <select id="reviewRating" class="bg-charcoal border border-white/15 rounded-sm p-2.5 text-sm text-alabaster focus:border-alabaster focus:outline-none">
+                <option value="5">★★★★★ (5/5 Perfeito)</option>
+                <option value="4">★★★★☆ (4/5 Muito bom)</option>
+                <option value="3">★★★☆☆ (3/5 Bom)</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-mono uppercase text-mist mb-1">Depoimento *</label>
+            <textarea id="reviewComment" required rows="3" maxlength="280" class="w-full bg-charcoal border border-white/15 rounded-sm p-2.5 text-sm text-alabaster focus:border-alabaster focus:outline-none" placeholder="Conte como foi o atendimento, a delicadeza dos traços, ambiente, cicatrização..."></textarea>
+          </div>
+          <div class="flex items-center justify-end gap-2 pt-2">
+            <button type="button" onclick="toggleReviewModal(false)" class="px-4 py-2 border border-white/15 text-mist text-xs font-mono hover:text-white">CANCELAR</button>
+            <button type="submit" class="px-5 py-2 bg-alabaster text-obsidian text-xs font-mono font-bold hover:bg-white transition">PUBLICAR AVALIAÇÃO</button>
+          </div>
+        </form>
       </div>
     </div>
 
@@ -1602,12 +1769,14 @@
       mediaContainer.className = `flex items-center justify-center max-h-[75vh] w-auto overflow-hidden rounded-sm border border-white/20 shadow-2xl p-4 sm:p-6 transition-all ${flashBg}`;
 
       if (imageUrl) {
-        mediaContainer.innerHTML = `<img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(flash.title)}" class="max-h-[65vh] max-w-[85vw] object-contain rounded-sm select-none">`;
+        mediaContainer.innerHTML = `<img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(flash.title)}" class="zoom-target max-h-[65vh] max-w-[85vw] object-contain rounded-sm select-none">`;
       } else if (flash.svg) {
-        mediaContainer.innerHTML = `<div class="p-4 sm:p-8 flex items-center justify-center">${flash.svg.replace('class="w-36 h-36"', 'class="w-64 h-64 sm:w-80 sm:h-80"')}</div>`;
+        mediaContainer.innerHTML = `<div class="zoom-target p-4 sm:p-8 flex items-center justify-center">${flash.svg.replace('class="w-36 h-36"', 'class="w-64 h-64 sm:w-80 sm:h-80"')}</div>`;
       } else {
         mediaContainer.innerHTML = `<div class="p-8 text-obsidian/70 font-mono text-sm">Visualização indisponível</div>`;
       }
+
+      resetLightboxZoom();
 
       titleEl.textContent = flash.title || 'Flash Exclusivo';
       subtitleEl.innerHTML = `Código: <span class="text-alabaster">${escapeHtml(flash.id)}</span> • Sugerido: <span class="text-alabaster">${escapeHtml(flash.cm || '—')} cm (${escapeHtml(flash.zone || 'A combinar')})</span> • Valor fixo: <span class="navy-glow-text font-semibold">R$ ${Number(flash.price).toLocaleString('pt-BR')}</span>${flash.desc ? `<br><span class="text-mist/90 text-xs mt-1 block italic">${escapeHtml(flash.desc)}</span>` : ''}`;
@@ -1640,10 +1809,12 @@
       const finalImg = imageSource?.url || post.imageUrl || '';
 
       if (finalImg) {
-        mediaContainer.innerHTML = `<img src="${escapeHtml(finalImg)}" alt="${escapeHtml(post.caption || 'Portfólio')}" class="max-h-[70vh] max-w-[85vw] object-contain rounded-sm select-none">`;
+        mediaContainer.innerHTML = `<img src="${escapeHtml(finalImg)}" alt="${escapeHtml(post.caption || 'Portfólio')}" class="zoom-target max-h-[70vh] max-w-[85vw] object-contain rounded-sm select-none">`;
       } else {
         mediaContainer.innerHTML = `<div class="p-8 text-mist font-mono text-sm">Imagem não disponível</div>`;
       }
+
+      resetLightboxZoom();
 
       titleEl.textContent = post.caption || 'Obra Realizada';
       subtitleEl.textContent = 'Trabalho autoral em pele cicatrizada / recém-tatuada por Morgan.';
@@ -1669,6 +1840,7 @@
         const modal = document.getElementById('imageLightboxModal');
         if (modal) modal.classList.add('hidden');
         document.body.style.overflow = '';
+        resetLightboxZoom();
       }
     }
 
@@ -1683,6 +1855,303 @@
       }
     });
 
+    // =========================================================
+    // NOVO: ZOOM & PAN NO LIGHTBOX
+    // =========================================================
+    let zoomState = {
+      scale: 1,
+      minScale: 1,
+      maxScale: 3.5,
+      panning: false,
+      startX: 0,
+      startY: 0,
+      translateX: 0,
+      translateY: 0
+    };
+
+    function resetLightboxZoom() {
+      zoomState.scale = 1;
+      zoomState.translateX = 0;
+      zoomState.translateY = 0;
+      zoomState.panning = false;
+      applyZoomTransform();
+    }
+
+    function adjustLightboxZoom(delta) {
+      const next = Math.min(zoomState.maxScale, Math.max(zoomState.minScale, zoomState.scale + delta));
+      zoomState.scale = Math.round(next * 10) / 10;
+      if (zoomState.scale === 1) {
+        zoomState.translateX = 0;
+        zoomState.translateY = 0;
+      }
+      applyZoomTransform();
+    }
+
+    function applyZoomTransform() {
+      const target = document.querySelector('#lightboxMediaContainer .zoom-target');
+      const levelEl = document.getElementById('lightboxZoomLevel');
+      if (levelEl) levelEl.textContent = `${Math.round(zoomState.scale * 100)}%`;
+      if (!target) return;
+
+      target.style.transform = `translate(${zoomState.translateX}px, ${zoomState.translateY}px) scale(${zoomState.scale})`;
+      if (zoomState.scale > 1) {
+        target.classList.add('zoom-grab');
+      } else {
+        target.classList.remove('zoom-grab', 'zoom-grabbing');
+      }
+    }
+
+    function initLightboxZoomEvents() {
+      const container = document.getElementById('lightboxMediaContainer');
+      if (!container) return;
+
+      // Zoom via scroll da rodinha do mouse
+      container.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const delta = e.deltaY < 0 ? 0.25 : -0.25;
+        adjustLightboxZoom(delta);
+      }, { passive: false });
+
+      // Pan / Arrasto com mouse
+      container.addEventListener('mousedown', (e) => {
+        if (zoomState.scale <= 1) return;
+        zoomState.panning = true;
+        zoomState.startX = e.clientX - zoomState.translateX;
+        zoomState.startY = e.clientY - zoomState.translateY;
+        const target = document.querySelector('#lightboxMediaContainer .zoom-target');
+        if (target) target.classList.add('zoom-grabbing');
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!zoomState.panning || zoomState.scale <= 1) return;
+        zoomState.translateX = e.clientX - zoomState.startX;
+        zoomState.translateY = e.clientY - zoomState.startY;
+        applyZoomTransform();
+      });
+
+      window.addEventListener('mouseup', () => {
+        if (zoomState.panning) {
+          zoomState.panning = false;
+          const target = document.querySelector('#lightboxMediaContainer .zoom-target');
+          if (target) target.classList.remove('zoom-grabbing');
+        }
+      });
+    }
+
+    // =========================================================
+    // NOVO: SPOTIFY WIDGET TOGGLE
+    // =========================================================
+    function toggleSpotifyWidget(forceOpen) {
+      const card = document.getElementById('spotifyPlayerCard');
+      const badge = document.getElementById('spotifyBadgeState');
+      if (!card) return;
+      const isOpen = typeof forceOpen === 'boolean' ? forceOpen : card.classList.contains('hidden');
+      card.classList.toggle('hidden', !isOpen);
+      if (badge) badge.textContent = isOpen ? 'ativo' : 'ouvir';
+    }
+
+    // =========================================================
+    // NOVO: "ESTIVE AQUI" (CORAÇÕES GÓTICOS & CONTADOR)
+    // =========================================================
+    let GOTH_HEARTS_COUNT = (() => {
+      try {
+        const saved = parseInt(localStorage.getItem('morgan_goth_hearts_v1'), 10);
+        return Number.isFinite(saved) ? saved : 42;
+      } catch (e) {
+        return 42;
+      }
+    })();
+
+    function renderGothHeartCount() {
+      const el = document.getElementById('gothHeartCount');
+      if (el) el.textContent = GOTH_HEARTS_COUNT;
+    }
+
+    function spawnGothHeart(e) {
+      GOTH_HEARTS_COUNT++;
+      try {
+        localStorage.setItem('morgan_goth_hearts_v1', GOTH_HEARTS_COUNT);
+      } catch (err) {}
+      renderGothHeartCount();
+
+      const btn = document.getElementById('gothHeartBtn');
+      const rect = btn.getBoundingClientRect();
+      const originX = rect.left + rect.width / 2;
+      const originY = rect.top;
+
+      const heartSymbols = ['🖤', '🦇', '✨', '🕷️', '⛧', '🖤'];
+      const count = 5 + Math.floor(Math.random() * 3);
+
+      for (let i = 0; i < count; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'goth-heart-particle';
+        particle.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+        
+        const randomX = (Math.random() - 0.5) * 140;
+        const randomLeft = originX + (Math.random() - 0.5) * 30;
+        const randomTop = originY + (Math.random() - 0.5) * 10;
+        const randomSize = 14 + Math.random() * 18;
+
+        particle.style.left = `${randomLeft}px`;
+        particle.style.top = `${randomTop}px`;
+        particle.style.fontSize = `${randomSize}px`;
+        particle.style.setProperty('--tw-x', `${randomX}px`);
+
+        document.body.appendChild(particle);
+        setTimeout(() => {
+          if (particle.parentNode) particle.parentNode.removeChild(particle);
+        }, 1600);
+      }
+    }
+
+    // =========================================================
+    // NOVO: REVIEWS / DEPOIMENTOS DE CLIENTES
+    // =========================================================
+    const DEFAULT_REVIEWS = [
+      {
+        id: 'REV-01',
+        author: 'Isabela M. (@isa.darkart)',
+        tattoo: 'Musa Élfica e Nuvens • Blackwork',
+        rating: 5,
+        date: 'Outubro 2026',
+        comment: 'Experiência impecável! A Morgan tem uma delicadeza surreal com os traços finos e o contraste ficou exatamente como eu sonhava. Cicatrização perfeita seguindo o protocolo.'
+      },
+      {
+        id: 'REV-02',
+        author: 'Gabriel S.',
+        tattoo: 'Ceifador 360° no Braço',
+        rating: 5,
+        date: 'Setembro 2026',
+        comment: 'Studio muito acolhedor, playlist incrível durante a sessão e a paciência dela para posicionar a arte no decalque foi nota 10. Já estou planejando a próxima!'
+      },
+      {
+        id: 'REV-03',
+        author: 'Camila P. (@camilap_)',
+        tattoo: 'Cybersigilism na Lombar',
+        rating: 5,
+        date: 'Agosto 2026',
+        comment: 'Arte 100% autoral e exclusiva! O preto pigmentou absurdamente bem e não desbotou nada. Profissionalismo e estética de outro nível.'
+      }
+    ];
+
+    let REVIEWS = (() => {
+      try {
+        const saved = JSON.parse(localStorage.getItem('morgan_reviews_v1'));
+        return (Array.isArray(saved) && saved.length > 0) ? saved : DEFAULT_REVIEWS;
+      } catch (e) {
+        return DEFAULT_REVIEWS;
+      }
+    })();
+
+    function persistReviews() {
+      try {
+        localStorage.setItem('morgan_reviews_v1', JSON.stringify(REVIEWS));
+        return true;
+      } catch (e) {
+        alert('Não foi possível salvar a avaliação.');
+        return false;
+      }
+    }
+
+    function renderReviews() {
+      const grid = document.getElementById('reviewsGrid');
+      if (!grid) return;
+      if (!REVIEWS.length) {
+        grid.innerHTML = '<p class="col-span-full text-center text-mist py-8 font-mono text-xs">Seja a primeira pessoa a deixar uma avaliação!</p>';
+        return;
+      }
+
+      grid.innerHTML = REVIEWS.map(r => {
+        const stars = '★'.repeat(r.rating || 5) + '☆'.repeat(Math.max(0, 5 - (r.rating || 5)));
+        return `
+          <article class="bg-charcoal border border-white/15 rounded-sm p-5 flex flex-col justify-between hover:border-white/35 transition">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-amber-300 font-mono text-sm tracking-widest">${stars}</span>
+                <span class="text-[10px] font-mono text-mist">${escapeHtml(r.date || 'Recente')}</span>
+              </div>
+              <p class="text-sm text-alabaster/90 italic leading-relaxed mb-4">"${escapeHtml(r.comment)}"</p>
+            </div>
+            <div class="border-t border-white/10 pt-3">
+              <h4 class="font-serif text-base text-alabaster font-semibold">${escapeHtml(r.author)}</h4>
+              <span class="text-xs font-mono navy-glow-text block">${escapeHtml(r.tattoo)}</span>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function toggleReviewModal(forceOpen) {
+      const modal = document.getElementById('newReviewModal');
+      if (!modal) return;
+      const isOpen = typeof forceOpen === 'boolean' ? forceOpen : modal.classList.contains('hidden');
+      modal.classList.toggle('hidden', !isOpen);
+      modal.classList.toggle('flex', isOpen);
+    }
+
+    function submitPublicReview(e) {
+      e.preventDefault();
+      const author = document.getElementById('reviewAuthor').value.trim();
+      const tattoo = document.getElementById('reviewTattoo').value.trim();
+      const rating = parseInt(document.getElementById('reviewRating').value, 10) || 5;
+      const comment = document.getElementById('reviewComment').value.trim();
+
+      if (!author || !tattoo || !comment) {
+        alert('Por favor, preencha todos os campos da avaliação.');
+        return;
+      }
+
+      const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+      const now = new Date();
+      const dateStr = `${months[now.getMonth()]} ${now.getFullYear()}`;
+
+      REVIEWS.unshift({
+        id: `REV-${Date.now()}`,
+        author,
+        tattoo,
+        rating,
+        date: dateStr,
+        comment
+      });
+
+      persistReviews();
+      renderReviews();
+      renderAdminReviewsList();
+      document.getElementById('publicReviewForm').reset();
+      toggleReviewModal(false);
+      alert('Obrigada pelo seu depoimento! Sua avaliação já foi publicada no site 🖤');
+    }
+
+    function renderAdminReviewsList() {
+      const list = document.getElementById('adminReviewsList');
+      const count = document.getElementById('adminReviewsCount');
+      if (!list || !count) return;
+      count.textContent = `${REVIEWS.length} ${REVIEWS.length === 1 ? 'review' : 'reviews'}`;
+      if (!REVIEWS.length) {
+        list.innerHTML = '<p class="text-xs text-mist py-2">Nenhum depoimento cadastrado.</p>';
+        return;
+      }
+
+      list.innerHTML = REVIEWS.map(r => `
+        <div class="bg-charcoal border border-white/10 p-3 flex items-start justify-between gap-3 text-xs">
+          <div class="min-w-0">
+            <div class="text-alabaster font-semibold">${escapeHtml(r.author)} • <span class="text-amber-300 font-mono">${'★'.repeat(r.rating || 5)}</span></div>
+            <div class="text-[11px] text-mist font-mono">${escapeHtml(r.tattoo)}</div>
+            <p class="text-mist/90 mt-1 italic break-words">"${escapeHtml(r.comment)}"</p>
+          </div>
+          <button type="button" onclick="deleteReview('${escapeHtml(r.id)}')" class="border border-red-400/40 text-red-300 px-2.5 py-1 text-[11px] font-mono hover:bg-red-950/40 shrink-0">EXCLUIR</button>
+        </div>
+      `).join('');
+    }
+
+    function deleteReview(revId) {
+      if (!confirm('Deseja realmente excluir este depoimento?')) return;
+      REVIEWS = REVIEWS.filter(r => String(r.id) !== String(revId));
+      persistReviews();
+      renderReviews();
+      renderAdminReviewsList();
+    }
+
     // Inicialização ao carregar a página
     window.addEventListener('DOMContentLoaded', () => {
       let hash = window.location.hash.replace('#', '') || 'home';
@@ -1690,6 +2159,10 @@
 
       renderFlashes();
       renderPortfolio();
+      renderReviews();
+      renderAdminReviewsList();
+      renderGothHeartCount();
+      initLightboxZoomEvents();
       renderAdminList();
       renderPortfolioAdminList();
       updateQuote();
