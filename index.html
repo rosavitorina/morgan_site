@@ -133,6 +133,132 @@
       animation: floatHeart 1.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
       filter: drop-shadow(0 0 6px rgba(255,255,255,0.4));
     }
+    /* Flutuador de +1 Alma */
+    @keyframes floatPlusOne {
+      0% { opacity: 0; transform: translateY(0) scale(0.7); }
+      20% { opacity: 1; transform: translateY(-12px) scale(1.15); }
+      80% { opacity: 1; transform: translateY(-38px) scale(1); }
+      100% { opacity: 0; transform: translateY(-60px) scale(0.8); }
+    }
+    .plus-one-particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 105;
+      user-select: none;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 12px;
+      color: #F4F4F6;
+      text-shadow: 0 0 10px rgba(168, 85, 247, 0.8), 0 0 4px #000;
+      animation: floatPlusOne 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    /* Bônus 10 Clicks: Revoada de Morcegos */
+    @keyframes batFlyAcross {
+      0% {
+        opacity: 0;
+        transform: translate(0, 0) scale(0.6) rotate(0deg);
+      }
+      20% {
+        opacity: 1;
+        transform: translate(calc(var(--target-x) * 0.25), calc(var(--target-y) * 0.25)) scale(1.3) rotate(-15deg);
+      }
+      50% {
+        transform: translate(calc(var(--target-x) * 0.55), calc(var(--target-y) * 0.55)) scale(1) rotate(20deg);
+      }
+      80% {
+        opacity: 0.95;
+        transform: translate(calc(var(--target-x) * 0.85), calc(var(--target-y) * 0.85)) scale(1.1) rotate(-10deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(var(--target-x), var(--target-y)) scale(0.5) rotate(15deg);
+      }
+    }
+    .bat-particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 110;
+      user-select: none;
+      animation: batFlyAcross 2.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+      filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.75));
+    }
+    /* Bônus 50 Clicks: Explosão de Rosas e Adagas */
+    @keyframes roseBurst {
+      0% {
+        opacity: 0;
+        transform: translate(0, 0) scale(0.4) rotate(0deg);
+      }
+      20% {
+        opacity: 1;
+        transform: translate(calc(var(--burst-x) * 0.5), calc(var(--burst-y) * 0.5)) scale(1.3) rotate(calc(var(--burst-rot) * 0.5));
+      }
+      70% {
+        opacity: 1;
+        transform: translate(var(--burst-x), var(--burst-y)) scale(1.15) rotate(var(--burst-rot));
+      }
+      100% {
+        opacity: 0;
+        transform: translate(calc(var(--burst-x) * 1.25), calc(var(--burst-y) + 100px)) scale(0.6) rotate(calc(var(--burst-rot) * 1.4));
+      }
+    }
+    .rose-burst-particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 120;
+      user-select: none;
+      animation: roseBurst 2.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      filter: drop-shadow(0 0 10px rgba(236, 72, 153, 0.7));
+    }
+    /* Bônus 100 Clicks: Cascata Cósmica Ancestral */
+    @keyframes rainConfetti {
+      0% {
+        opacity: 0;
+        transform: translateY(-50px) rotate(0deg) scale(0.6);
+      }
+      15% {
+        opacity: 1;
+      }
+      85% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(105vh) rotate(var(--confetti-rot, 360deg)) scale(1.1);
+      }
+    }
+    .goth-confetti-particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 130;
+      user-select: none;
+      animation: rainConfetti 3.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+      filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.85));
+    }
+    /* Flash e Vinheta de Tela */
+    @keyframes screenVignettePulse {
+      0% { opacity: 0; }
+      25% { opacity: 0.85; }
+      75% { opacity: 0.75; }
+      100% { opacity: 0; }
+    }
+    .screen-vignette-pulse {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 99;
+      background: radial-gradient(circle, transparent 35%, rgba(147, 51, 234, 0.35) 85%, rgba(10, 5, 20, 0.85) 100%);
+      animation: screenVignettePulse 2.8s ease-out forwards;
+    }
+    @keyframes gothShake {
+      0%, 100% { transform: translate(0, 0); }
+      20% { transform: translate(-5px, 2px) rotate(-1.5deg); }
+      40% { transform: translate(5px, -2px) rotate(1.5deg); }
+      60% { transform: translate(-3px, -1px); }
+      80% { transform: translate(3px, 1px); }
+    }
+    .goth-shake {
+      animation: gothShake 0.45s ease-in-out;
+    }
     /* Estilos do Zoom / Pan no Lightbox */
     .zoom-container {
       overflow: hidden;
@@ -389,12 +515,52 @@
     </button>
   </div>
 
-  <!-- WIDGET FLUTUANTE: "ESTIVE AQUI" (Corações Góticos & Contador) -->
-  <div class="fixed bottom-4 right-48 sm:right-56 z-[70]">
-    <button type="button" id="gothHeartBtn" onclick="spawnGothHeart(event)" class="flex items-center gap-2 px-3 py-2 bg-charcoal/90 border border-white/20 text-alabaster rounded-sm shadow-xl hover:bg-ash text-xs font-mono transition active:scale-95 group" title="Deixe sua energia aqui 🖤">
-      <span class="text-sm group-hover:scale-125 transition-transform">🖤</span>
-      <span class="text-[11px] hidden sm:inline text-mist group-hover:text-alabaster">estive aqui:</span>
-      <span id="gothHeartCount" class="font-bold navy-glow-text text-xs">0</span>
+  <!-- BANNER FLUTUANTE DE CONQUISTAS GÓTICAS (A CADA 10, 50 E 100 CLICKS) -->
+  <div id="gothMilestoneBanner" class="fixed top-6 left-1/2 -translate-x-1/2 z-[150] transition-all duration-500 opacity-0 pointer-events-none transform -translate-y-6 max-w-md w-[92%] sm:w-auto">
+    <div class="bg-charcoal/95 border-2 border-white/30 backdrop-blur-xl px-4 py-3 sm:px-5 sm:py-3.5 rounded-sm shadow-[0_20px_50px_rgba(0,0,0,0.9)] flex items-center gap-3 text-alabaster font-mono">
+      <div id="gothBannerIcon" class="text-2xl sm:text-3xl shrink-0 animate-bounce">🦇</div>
+      <div class="flex-1 min-w-0">
+        <div id="gothBannerTitle" class="text-xs uppercase font-bold text-alabaster tracking-wider"></div>
+        <div id="gothBannerDesc" class="text-[11px] text-mist mt-0.5 leading-snug"></div>
+      </div>
+      <button type="button" onclick="dismissGothBanner()" class="text-mist hover:text-alabaster text-sm px-1.5 py-0.5 pointer-events-auto">✕</button>
+    </div>
+  </div>
+
+  <!-- WIDGET FLUTUANTE: "ESTIVE AQUI" (MINI-GAME DE ALMAS & CORAÇÕES GÓTICOS) -->
+  <div id="gothMiniGameWidget" class="fixed bottom-20 right-4 sm:bottom-4 sm:right-48 z-[70] flex flex-col items-end gap-1.5 font-mono select-none">
+    
+    <!-- Mini HUD de Progresso / Nível -->
+    <div id="gothMiniHud" class="bg-charcoal/95 backdrop-blur-md border border-white/20 rounded-sm p-2 sm:p-2.5 shadow-2xl w-56 sm:w-64 flex flex-col gap-1.5 transition-all duration-300">
+      <div class="flex items-center justify-between text-[10px]">
+        <span class="flex items-center gap-1.5 text-alabaster font-semibold truncate">
+          <span id="gothRankIcon" class="text-xs">🦇</span>
+          <span id="gothRankTitle" class="truncate">Iniciado das Sombras</span>
+        </span>
+        <span id="gothComboCount" class="text-[10px] text-mist font-bold shrink-0">Combo: <span id="gothUserClicks" class="text-alabaster">0</span></span>
+      </div>
+
+      <!-- Barra de progresso do mini-jogo -->
+      <div class="w-full bg-obsidian border border-white/10 rounded-full h-2 relative overflow-hidden" title="Progresso para o próximo ritual">
+        <div id="gothProgressBar" class="h-full bg-gradient-to-r from-purple-600 via-indigo-400 to-pink-500 rounded-full transition-all duration-300 shadow-[0_0_10px_rgba(168,85,247,0.7)]" style="width: 0%"></div>
+      </div>
+
+      <div class="flex items-center justify-between text-[9px] text-mist">
+        <span class="truncate">Meta: <strong id="gothNextMilestoneText" class="text-alabaster font-semibold">0 / 10</strong></span>
+        <span id="gothMilestoneReward" class="text-pink-300 font-semibold shrink-0">🦇 10: Revoada</span>
+      </div>
+    </div>
+
+    <!-- Botão Principal de Clique -->
+    <button type="button" id="gothHeartBtn" onclick="spawnGothHeart(event)" class="w-56 sm:w-64 flex items-center justify-between gap-2 px-3 py-2 bg-charcoal/95 border border-white/25 text-alabaster rounded-sm shadow-2xl hover:bg-ash text-xs font-mono transition active:scale-95 group relative overflow-hidden" title="Clique para acumular almas e avançar no mini-jogo!">
+      <span class="flex items-center gap-1.5">
+        <span id="gothHeartIcon" class="text-base group-hover:scale-125 transition-transform duration-200">🖤</span>
+        <span class="text-[11px] font-bold tracking-wider text-alabaster">ESTIVE AQUI</span>
+      </span>
+      <div class="flex items-center gap-1 bg-obsidian/80 px-2 py-0.5 rounded border border-white/10">
+        <span class="text-[9px] text-mist uppercase">Total:</span>
+        <span id="gothHeartCount" class="font-bold navy-glow-text text-xs">42</span>
+      </div>
     </button>
   </div>
 
@@ -1951,7 +2117,7 @@
     }
 
     // =========================================================
-    // NOVO: "ESTIVE AQUI" (CORAÇÕES GÓTICOS & CONTADOR)
+    // MINI-GAME GÓTICO: "ESTIVE AQUI" (ALMAS, COMBO & CONQUISTAS)
     // =========================================================
     let GOTH_HEARTS_COUNT = (() => {
       try {
@@ -1962,16 +2128,279 @@
       }
     })();
 
+    let GOTH_USER_CLICKS = (() => {
+      try {
+        const saved = parseInt(localStorage.getItem('morgan_user_clicks_v2'), 10);
+        return Number.isFinite(saved) ? saved : 0;
+      } catch (e) {
+        return 0;
+      }
+    })();
+
+    let gothBannerTimeout = null;
+
+    function getGothProgressInfo(clicks) {
+      let prevGoal = 0;
+      let nextGoal = 10;
+      let rank = 'Iniciado das Sombras';
+      let rankIcon = '🦇';
+      let reward = '🦇 10: Revoada';
+
+      if (clicks < 10) {
+        prevGoal = 0;
+        nextGoal = 10;
+        rank = 'Iniciado das Sombras';
+        rankIcon = '🦇';
+        reward = '🦇 10: Revoada';
+      } else if (clicks < 50) {
+        prevGoal = 10;
+        nextGoal = 50;
+        rank = 'Guardião da Noite';
+        rankIcon = '🥀';
+        reward = '🥀 50: Eclipse';
+      } else if (clicks < 100) {
+        prevGoal = 50;
+        nextGoal = 100;
+        rank = 'Mestre Ocultista';
+        rankIcon = '💀';
+        reward = '👑 100: Ascensão';
+      } else {
+        const tier = Math.floor(clicks / 100);
+        prevGoal = tier * 100;
+        nextGoal = (tier + 1) * 100;
+        rank = `Lenda Ancestral Lv.${tier}`;
+        rankIcon = '👑';
+        reward = `👑 ${nextGoal}: Supremo`;
+      }
+
+      const range = Math.max(1, nextGoal - prevGoal);
+      const current = Math.max(0, clicks - prevGoal);
+      const percent = Math.min(100, Math.max(0, Math.round((current / range) * 100)));
+
+      return {
+        rank,
+        rankIcon,
+        nextGoal,
+        reward,
+        percent,
+        current
+      };
+    }
+
     function renderGothHeartCount() {
       const el = document.getElementById('gothHeartCount');
       if (el) el.textContent = GOTH_HEARTS_COUNT;
+
+      const userClicksEl = document.getElementById('gothUserClicks');
+      if (userClicksEl) userClicksEl.textContent = GOTH_USER_CLICKS;
+
+      const info = getGothProgressInfo(GOTH_USER_CLICKS);
+
+      const rankTitleEl = document.getElementById('gothRankTitle');
+      if (rankTitleEl) rankTitleEl.textContent = info.rank;
+
+      const rankIconEl = document.getElementById('gothRankIcon');
+      if (rankIconEl) rankIconEl.textContent = info.rankIcon;
+
+      const barEl = document.getElementById('gothProgressBar');
+      if (barEl) barEl.style.width = `${info.percent}%`;
+
+      const nextMetaEl = document.getElementById('gothNextMilestoneText');
+      if (nextMetaEl) nextMetaEl.textContent = `${GOTH_USER_CLICKS} / ${info.nextGoal}`;
+
+      const rewardEl = document.getElementById('gothMilestoneReward');
+      if (rewardEl) rewardEl.textContent = info.reward;
+    }
+
+    function showGothMilestoneBanner(icon, title, desc, duration = 4000) {
+      const banner = document.getElementById('gothMilestoneBanner');
+      if (!banner) return;
+      const iconEl = document.getElementById('gothBannerIcon');
+      const titleEl = document.getElementById('gothBannerTitle');
+      const descEl = document.getElementById('gothBannerDesc');
+
+      if (iconEl) iconEl.textContent = icon;
+      if (titleEl) titleEl.textContent = title;
+      if (descEl) descEl.textContent = desc;
+
+      banner.classList.remove('opacity-0', '-translate-y-6', 'pointer-events-none');
+      banner.classList.add('opacity-100', 'translate-y-0');
+
+      if (gothBannerTimeout) clearTimeout(gothBannerTimeout);
+      gothBannerTimeout = setTimeout(() => {
+        dismissGothBanner();
+      }, duration);
+    }
+
+    function dismissGothBanner() {
+      const banner = document.getElementById('gothMilestoneBanner');
+      if (!banner) return;
+      banner.classList.remove('opacity-100', 'translate-y-0');
+      banner.classList.add('opacity-0', '-translate-y-6', 'pointer-events-none');
+    }
+
+    function spawnPlusOne(originX, originY) {
+      const el = document.createElement('div');
+      el.className = 'plus-one-particle';
+      el.textContent = '+1 Alma 🖤';
+      el.style.left = `${originX - 25 + (Math.random() - 0.5) * 20}px`;
+      el.style.top = `${originY - 20}px`;
+      document.body.appendChild(el);
+      setTimeout(() => {
+        if (el.parentNode) el.parentNode.removeChild(el);
+      }, 1200);
+    }
+
+    function triggerMilestone10(originX, originY) {
+      const btn = document.getElementById('gothHeartBtn');
+      if (btn) {
+        btn.classList.add('goth-shake');
+        setTimeout(() => btn.classList.remove('goth-shake'), 450);
+      }
+
+      // Revoada de 20 morcegos voando em arcos em direção ao topo/esquerda da tela
+      const batCount = 20;
+      for (let i = 0; i < batCount; i++) {
+        setTimeout(() => {
+          const bat = document.createElement('div');
+          bat.className = 'bat-particle';
+          bat.textContent = i % 4 === 0 ? '🖤' : (i % 3 === 0 ? '✨' : '🦇');
+          
+          const startX = originX + (Math.random() - 0.5) * 60;
+          const startY = originY + (Math.random() - 0.5) * 40;
+          
+          const targetX = - (originX * 0.7 + Math.random() * 350);
+          const targetY = - (originY * 0.8 + Math.random() * 300);
+          const size = 18 + Math.random() * 24;
+
+          bat.style.left = `${startX}px`;
+          bat.style.top = `${startY}px`;
+          bat.style.fontSize = `${size}px`;
+          bat.style.setProperty('--target-x', `${targetX}px`);
+          bat.style.setProperty('--target-y', `${targetY}px`);
+
+          document.body.appendChild(bat);
+          setTimeout(() => {
+            if (bat.parentNode) bat.parentNode.removeChild(bat);
+          }, 2400);
+        }, i * 65);
+      }
+
+      showGothMilestoneBanner(
+        '🦇',
+        `Revoada da Meia-Noite • Combo ${GOTH_USER_CLICKS}x!`,
+        'Você libertou a revoada de morcegos sobre o santuário. A noite saúda sua presença!',
+        4000
+      );
+    }
+
+    function triggerMilestone50(originX, originY) {
+      const btn = document.getElementById('gothHeartBtn');
+      if (btn) {
+        btn.classList.add('goth-shake');
+        setTimeout(() => btn.classList.remove('goth-shake'), 450);
+      }
+
+      // Pulso de vinheta roxa/sombria na tela inteira
+      const vignette = document.createElement('div');
+      vignette.className = 'screen-vignette-pulse';
+      document.body.appendChild(vignette);
+      setTimeout(() => {
+        if (vignette.parentNode) vignette.parentNode.removeChild(vignette);
+      }, 2800);
+
+      // Explosão radial de 42 rosas, adagas, teias e caveiras
+      const symbols = ['🥀', '💀', '🗡️', '🕸️', '🩸', '🖤', '✨', '🥀'];
+      const burstCount = 42;
+      for (let i = 0; i < burstCount; i++) {
+        const item = document.createElement('div');
+        item.className = 'rose-burst-particle';
+        item.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+
+        const angle = (i / burstCount) * (Math.PI * 2) + (Math.random() - 0.5) * 0.4;
+        const distance = 160 + Math.random() * 220;
+        const burstX = Math.cos(angle) * distance;
+        const burstY = Math.sin(angle) * distance;
+        const rot = (Math.random() - 0.5) * 360;
+        const size = 20 + Math.random() * 22;
+
+        item.style.left = `${originX}px`;
+        item.style.top = `${originY}px`;
+        item.style.fontSize = `${size}px`;
+        item.style.setProperty('--burst-x', `${burstX}px`);
+        item.style.setProperty('--burst-y', `${burstY}px`);
+        item.style.setProperty('--burst-rot', `${rot}deg`);
+
+        document.body.appendChild(item);
+        setTimeout(() => {
+          if (item.parentNode) item.parentNode.removeChild(item);
+        }, 2800);
+      }
+
+      showGothMilestoneBanner(
+        '🥀',
+        `Eclipse Carmesim • Combo ${GOTH_USER_CLICKS}x!`,
+        'O véu foi rasgado. Você ascendeu ao Grau de Mestre Ocultista do Studio Morgan Tattoo!',
+        5000
+      );
+    }
+
+    function triggerMilestone100() {
+      const btn = document.getElementById('gothHeartBtn');
+      if (btn) {
+        btn.classList.add('goth-shake');
+        setTimeout(() => btn.classList.remove('goth-shake'), 450);
+      }
+
+      // Vinheta dupla e relâmpago de contraste
+      const vignette = document.createElement('div');
+      vignette.className = 'screen-vignette-pulse';
+      document.body.appendChild(vignette);
+      setTimeout(() => {
+        if (vignette.parentNode) vignette.parentNode.removeChild(vignette);
+      }, 3500);
+
+      // Chuva em cascata de confetti gótico na tela inteira (80 partículas)
+      const symbols = ['👑', '🖤', '☠️', '🌙', '🩸', '✨', '⛧', '🦇', '🥀'];
+      const count = 80;
+      for (let i = 0; i < count; i++) {
+        setTimeout(() => {
+          const confetti = document.createElement('div');
+          confetti.className = 'goth-confetti-particle';
+          confetti.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+
+          const startX = Math.random() * window.innerWidth;
+          const rot = (Math.random() - 0.5) * 720;
+          const size = 18 + Math.random() * 26;
+
+          confetti.style.left = `${startX}px`;
+          confetti.style.top = `-30px`;
+          confetti.style.fontSize = `${size}px`;
+          confetti.style.setProperty('--confetti-rot', `${rot}deg`);
+
+          document.body.appendChild(confetti);
+          setTimeout(() => {
+            if (confetti.parentNode) confetti.parentNode.removeChild(confetti);
+          }, 3800);
+        }, i * 40);
+      }
+
+      showGothMilestoneBanner(
+        '👑',
+        `RITUAL SUPREMO: ${GOTH_USER_CLICKS} CLICKS!`,
+        'LENDA ANCESTRAL! Você completou o ápice do ritual. Seu nome foi gravado no grimório eterno de Morgan!',
+        6500
+      );
     }
 
     function spawnGothHeart(e) {
       GOTH_HEARTS_COUNT++;
+      GOTH_USER_CLICKS++;
       try {
         localStorage.setItem('morgan_goth_hearts_v1', GOTH_HEARTS_COUNT);
+        localStorage.setItem('morgan_user_clicks_v2', GOTH_USER_CLICKS);
       } catch (err) {}
+
       renderGothHeartCount();
 
       const btn = document.getElementById('gothHeartBtn');
@@ -1979,8 +2408,21 @@
       const originX = rect.left + rect.width / 2;
       const originY = rect.top;
 
+      // Spawna floating "+1 Alma"
+      spawnPlusOne(originX, originY);
+
+      // Animação de rotação rápida do ícone
+      const heartIcon = document.getElementById('gothHeartIcon');
+      if (heartIcon) {
+        heartIcon.style.transform = 'scale(1.3) rotate(-15deg)';
+        setTimeout(() => {
+          heartIcon.style.transform = '';
+        }, 180);
+      }
+
+      // Spawna partículas normais
       const heartSymbols = ['🖤', '🦇', '✨', '🕷️', '⛧', '🖤'];
-      const count = 5 + Math.floor(Math.random() * 3);
+      const count = 4 + Math.floor(Math.random() * 3);
 
       for (let i = 0; i < count; i++) {
         const particle = document.createElement('div');
@@ -2001,6 +2443,15 @@
         setTimeout(() => {
           if (particle.parentNode) particle.parentNode.removeChild(particle);
         }, 1600);
+      }
+
+      // Checa os marcos bônus solicitados: a cada 10, a cada 50 e a cada 100 clicks
+      if (GOTH_USER_CLICKS % 100 === 0) {
+        triggerMilestone100();
+      } else if (GOTH_USER_CLICKS % 50 === 0) {
+        triggerMilestone50(originX, originY);
+      } else if (GOTH_USER_CLICKS % 10 === 0) {
+        triggerMilestone10(originX, originY);
       }
     }
 
