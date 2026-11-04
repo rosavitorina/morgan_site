@@ -4,17 +4,17 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>m o r g a n   t a t t o o — Portfólio, Flashes &amp; Orçamento</title>
-  <script src="./saved_resource"></script>
+  <script src="./assets/js/tailwind.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com/">
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
-  <link href="./css2" rel="stylesheet">
-  <script src="./web"></script>
-  <link rel="stylesheet" type="text/css" href="./style.css">
-  <link rel="stylesheet" type="text/css" href="./style(1).css">
-  <link rel="stylesheet" type="text/css" href="./style(2).css">
-  <link rel="stylesheet" type="text/css" href="./style(3).css">
-  <link rel="stylesheet" type="text/css" href="./style(4).css">
-  <link rel="stylesheet" type="text/css" href="./style(5).css">
+  <link href="./assets/css/fonts.css" rel="stylesheet">
+  <script src="./assets/js/phosphor-loader.js"></script>
+  <link rel="stylesheet" type="text/css" href="./assets/css/phosphor-regular.css">
+  <link rel="stylesheet" type="text/css" href="./assets/css/phosphor-thin.css">
+  <link rel="stylesheet" type="text/css" href="./assets/css/phosphor-light.css">
+  <link rel="stylesheet" type="text/css" href="./assets/css/phosphor-bold.css">
+  <link rel="stylesheet" type="text/css" href="./assets/css/phosphor-fill.css">
+  <link rel="stylesheet" type="text/css" href="./assets/css/phosphor-duotone.css">
 
   <script>
     tailwind.config = {
@@ -597,7 +597,7 @@
           <div id="logoTiltBox" onmousemove="tiltLogo(event)" onmouseleave="resetTilt()" class="tilt-inner aura-silver relative w-[280px] sm:w-[360px] aspect-square flex items-center justify-center select-none" title="Passe o mouse para inclinar em 3D" style="transform: rotateX(0deg) rotateY(0deg) scale(1);">
 
             <div class="animate-float relative w-full h-full flex items-center justify-center">
-              <img id="morganLogoImg" src="./logo3ideia4.png" alt="Morgan Tattoo Logo Oficial" class="w-full h-full object-contain relative z-20">
+              <img id="morganLogoImg" src="./assets/img/logo3ideia4.png" alt="Morgan Tattoo Logo Oficial" class="w-full h-full object-contain relative z-20">
             </div>
 
           </div>
@@ -1200,12 +1200,24 @@
 
 
     // 3. Dados dos Flashes e Portfólio
+    // As imagens foram para assets/img. Corrige caminhos antigos salvos no navegador pelo painel.
+    const OLD_PORTFOLIO_IMAGES = ['animebarriga.png', 'blackbraco.png', 'cruzpescoco.png', 'dragao.png', 'letrasbarriga.png', 'letrascostela.png', 'simbolopeito.png', 'tribalcanela.png', 'tribalcoxa.png', 'tribalmao.png'];
+
+    function fixOldImagePath(url) {
+      if (typeof url !== 'string') return url;
+      const name = url.replace('./', '').replace('portfolio_images/', '');
+      if (name === 'costasideia2.png') return './assets/img/flashes/costasideia2.png';
+      return OLD_PORTFOLIO_IMAGES.includes(name) ? `./assets/img/portfolio/${name}` : url;
+    }
+
     const DEFAULT_FLASHES = [];
 
     let FLASHES = (() => {
       try {
         const saved = JSON.parse(localStorage.getItem('morgan_flashes_v3'));
-        return (Array.isArray(saved) && saved.length > 0) ? saved : DEFAULT_FLASHES;
+        return (Array.isArray(saved) && saved.length > 0)
+          ? saved.map(flash => ({ ...flash, image: fixOldImagePath(flash.image) }))
+          : DEFAULT_FLASHES;
       } catch (error) {
         console.warn('Não foi possível carregar os flashes salvos:', error);
         return DEFAULT_FLASHES;
@@ -1238,67 +1250,67 @@
       {
         id: 'PORT-1793328985983',
         url: 'http://instagram.com/p/DTgdU18jlMd/',
-        imageUrl: './letrasbarriga.png',
+        imageUrl: './assets/img/portfolio/letrasbarriga.png',
         caption: '𝔰𝔯𝔯𝔶 𝔣𝔯 𝔭𝔯𝔱𝔶 𝔯𝔠𝔨𝔦𝔫𝔤'
       },
       {
         id: 'PORT-1793328851430',
         url: 'https://www.instagram.com/p/C-LUNSvJHRU/',
-        imageUrl: './letrascostela.png',
+        imageUrl: './assets/img/portfolio/letrascostela.png',
         caption: "𝖗𝖊𝖒𝖊𝖒𝖇𝖊𝖗 𝖞𝖔𝖚'𝖗𝖊 𝖆 𝖒𝖔𝖗𝖙𝖆𝖑 #mementomori #fineline #font #typewriter"
       },
       {
         id: 'PORT-1793328733364',
         url: 'https://www.instagram.com/p/DKkPqMdO41l/',
-        imageUrl: './tribalmao.png',
+        imageUrl: './assets/img/portfolio/tribalmao.png',
         caption: 'ORIGINAL CONCEPT ☆☆☆☆  #blackworktattoo #tattooflash #finelinetattoo #goth #cybertribal #cybersigilism #neotribal'
       },
       {
         id: 'PORT-1793328682072',
         url: 'https://www.instagram.com/p/DVjp3tIjvS8/',
-        imageUrl: './tribalcoxa.png',
+        imageUrl: './assets/img/portfolio/tribalcoxa.png',
         caption: '💟𝖈𝖞𝖇𝖊𝖗𝖘𝖎𝖌𝖎𝖑𝖎𝖘𝖒💟'
       },
       {
         id: 'PORT-1793328634042',
         url: 'https://www.instagram.com/p/DKiHU9_OzV5/?img_index=1',
-        imageUrl: './tribalcanela.png',
+        imageUrl: './assets/img/portfolio/tribalcanela.png',
         caption: '⋆˖⁺‧₊☽ ORIGINAL CONCEPT ☾₊‧⁺˖⋆ #traditionaltattoo #blackworktattoo #tattooflash #finelinetattoo #goth #cybertribal #cybersigilism #neotribal'
       },
       {
         id: 'PORT-1793328561645',
         url: 'https://www.instagram.com/p/C-TNdHEy2NB/?img_index=1',
-        imageUrl: './simbolopeito.png',
+        imageUrl: './assets/img/portfolio/simbolopeito.png',
         caption: 'PENTAGRAMA SUPERNATURAL . ࣪𖤐 + cicatrizando #supernatural #samwinchester #deanwinchester #supernaturalfamily #supernaturaltattoo'
       },
       {
         id: 'PORT-1793328467047',
         url: 'https://www.instagram.com/p/C_ihtQfp4ut/',
-        imageUrl: './cruzpescoco.png',
+        imageUrl: './assets/img/portfolio/cruzpescoco.png',
         caption: 'NEOCRUZ ༺♱༻ (design autoral) #neotribal #cybersigilism #cybertribal #originalart #autoral #necktattoo'
       },
       {
         id: 'PORT-1793328382834',
         url: 'https://www.instagram.com/p/DHv4Z1tO5OZ/?utm_source=ig_web_copy_link&srtk=MzRlODBiNWFlZA==',
-        imageUrl: './blackbraco.png',
+        imageUrl: './assets/img/portfolio/blackbraco.png',
         caption: 'CEIFADOR🏴‍☠️ / 360°/ cicatrizando #tattoo #tattoodesign #tattooinspiration #darktattoo #goth #grimreaper'
       },
       {
         id: 'PORT-1793328010532',
         url: 'https://www.instagram.com/p/DEDRhrJv2Sn/?utm_source=ig_web_copy_link&obrf=MzRlODBiNWFlZA==&srtk=MzRlODBiNWFlZA==',
-        imageUrl: './animebarriga.png',
+        imageUrl: './assets/img/portfolio/animebarriga.png',
         caption: '💀 #animetattoo #anime #manga #mangaart'
       },
       {
         id: 'PORT-1793327390590',
         url: 'https://www.instagram.com/p/DWCm-xoDuLZ/?utm_source=ig_web_copy_link&cplk=MzRlODBiNWFlZA==&srtk=MzRlODBiNWFlZA==',
-        imageUrl: './tribalcoxa.png',
+        imageUrl: './assets/img/portfolio/tribalcoxa.png',
         caption: '༺𓆩𝔢𝔱𝔥𝔢𝔯𝔢𝔞𝔩𓆪༻⋆ #cybersigilism ##neotribal #tattoo #tattoodesign'
       },
       {
         id: 'PORT-1793324043925',
         url: 'https://www.instagram.com/p/DcjBmE5sKAM/',
-        imageUrl: './dragao.png',
+        imageUrl: './assets/img/portfolio/dragao.png',
         caption: '‿̩͙⊱༒︎༻𝔯𝔢𝔡 𝔡𝔯𝔞𝔤𝔬𝔫༺༒︎⊰‿̩͙'
       }
     ];
@@ -1306,7 +1318,9 @@
     let PORTFOLIO = (() => {
       try {
         const saved = JSON.parse(localStorage.getItem('morgan_portfolio_v1'));
-        return (Array.isArray(saved) && saved.length > 0) ? saved : DEFAULT_PORTFOLIO;
+        return (Array.isArray(saved) && saved.length > 0)
+          ? saved.map(post => ({ ...post, imageUrl: fixOldImagePath(post.imageUrl) }))
+          : DEFAULT_PORTFOLIO;
       } catch (error) {
         console.warn('Não foi possível carregar os posts do portfólio:', error);
         return DEFAULT_PORTFOLIO;
