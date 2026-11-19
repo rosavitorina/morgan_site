@@ -8,4 +8,4 @@ Site oficial da Morgan Tattoo — Portfólio, Flashes e Agendamento.
 - `assets/css/`: fontes e ícones
 - `assets/js/`: Tailwind e carregador de ícones
 - `assets/img/`: logo, `portfolio/` e `flashes/`
-- `data/items.json`: exportação de flashes e portfólio (o site não lê este arquivo)
+- `data/items.js`: flashes e portfólio publicados (o site lê este arquivo; o botão "Salvar no site" do painel grava nele e copia as imagens)
