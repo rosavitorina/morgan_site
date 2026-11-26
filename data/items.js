@@ -4,11 +4,71 @@ window.SITE_ITEMS = {
     {
       "id": "FL-1793314448778",
       "title": "Tramp Stamp Cybertribal",
-      "price": 500,
+      "price": 940,
       "cm": 25,
       "zone": "Lombar",
       "cat": "sigil",
       "image": "./assets/img/flashes/costasideia2.png",
+      "desc": ""
+    },
+    {
+      "id": "FL-1795000000000",
+      "title": "Cruz Barroca",
+      "price": 450,
+      "cm": 8,
+      "zone": "Antebraço",
+      "cat": "todos",
+      "image": "./assets/img/flashes/cruz2.png",
+      "desc": ""
+    },
+    {
+      "id": "FL-1795000000001",
+      "title": "Cruz Estelar",
+      "price": 450,
+      "cm": 10,
+      "zone": "Antebraço",
+      "cat": "todos",
+      "image": "./assets/img/flashes/flash.png",
+      "desc": ""
+    },
+    {
+      "id": "FL-1795000000002",
+      "title": "Criatura Alada",
+      "price": 450,
+      "cm": 8,
+      "zone": "Antebraço",
+      "cat": "todos",
+      "image": "./assets/img/flashes/flash1.png",
+      "desc": ""
+    },
+    {
+      "id": "FL-1795000000003",
+      "title": "Estrela Gótica",
+      "price": 450,
+      "cm": 10,
+      "zone": "Antebraço",
+      "cat": "todos",
+      "image": "./assets/img/flashes/flash2.png",
+      "desc": ""
+    },
+    {
+      "id": "FL-1795000000004",
+      "title": "Lua e Cruz",
+      "price": 700,
+      "cm": 12,
+      "zone": "Antebraço",
+      "cat": "todos",
+      "image": "./assets/img/flashes/flash3.png",
+      "desc": ""
+    },
+    {
+      "id": "FL-1795000000005",
+      "title": "Dragão Tribal",
+      "price": 700,
+      "cm": 16,
+      "zone": "Antebraço",
+      "cat": "todos",
+      "image": "./assets/img/flashes/pernaideia1.png",
       "desc": ""
     }
   ],
