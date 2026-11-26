@@ -400,7 +400,7 @@
       animation: artFloat 9s ease-in-out infinite;
     }
     .art-filigrana::before, .art-filigrana::after {
-      content: ""; position: absolute; width: 560px; aspect-ratio: 1;
+      content: ""; position: absolute; width: 560px; aspect-ratio: 560 / 510;
       background: url(./assets/img/fundos/filigrana.webp) no-repeat center / contain; opacity: .14;
       animation: artBreathe 7s ease-in-out infinite;
     }
@@ -413,7 +413,7 @@
               mask-image: linear-gradient(0deg, #000, transparent 70%);
     }
     @keyframes artFloat { 0%, 100% { translate: 0 0; } 50% { translate: 0 -14px; } }
-    @keyframes artBreathe { 0%, 100% { opacity: .1; } 50% { opacity: .2; } }
+    @keyframes artBreathe { 0%, 100% { opacity: .14; } 50% { opacity: .28; } }
     @media (max-width: 767px) {
       .art-lanca { opacity: .18; background-size: auto 90%; }
       .art-rosa { width: 70vw; opacity: .18; }
@@ -578,6 +578,35 @@
       .hero-spiral { animation: none; stroke-dashoffset: 0; }
     }
   </style>
+  <style id="v3">
+    /* Filigranas da Morgan (morganlines) espalhadas pelas seções */
+    .fili { position: absolute; z-index: -1; pointer-events: none; width: clamp(240px, 34vw, 500px); aspect-ratio: 560 / 510;
+      background: url(./assets/img/fundos/filigrana.webp) no-repeat center / contain; opacity: .2; animation: filiBreathe 8s ease-in-out infinite; }
+    .fili-tl { top: -50px; left: -70px; }
+    .fili-tr { top: -50px; right: -70px; transform: scaleX(-1); animation-delay: -2s; }
+    .fili-bl { bottom: -50px; left: -70px; transform: scaleY(-1); animation-delay: -4s; }
+    .fili-br { bottom: -50px; right: -70px; transform: scale(-1, -1); animation-delay: -6s; }
+    .fili-sm { width: clamp(180px, 22vw, 300px); }
+    @keyframes filiBreathe { 0%, 100% { opacity: .14; } 50% { opacity: .3; } }
+    @media (max-width: 767px) { .fili { opacity: .16; } }
+    @media (prefers-reduced-motion: reduce) { .fili { animation: none; } }
+
+    /* Provador: malha, fundo, medida */
+    .try-sub { margin-top: .7rem; padding: .7rem .8rem; border-radius: 14px; background: rgba(255, 255, 255, .03); border: 1px solid rgba(255, 255, 255, .08); }
+    .try-dims { font: 600 11px 'JetBrains Mono', monospace; color: #7BA3D8; margin-top: .5rem; }
+    .try-btn.is-on { background: #7BA3D8; color: #070709; box-shadow: 0 0 22px -4px rgba(123, 163, 216, .8); }
+    .try-btn-sm { padding: .45rem .8rem; font-size: 10px; }
+
+    /* Orçamento: escolhas de detalhe e cor, prévia do Provador */
+    .pick-btn { padding: .65rem .8rem; border-radius: 14px; border: 1px solid rgba(255, 255, 255, .15); background: #070709; text-align: left; transition: border-color .3s, background .3s; }
+    .pick-btn.is-on { border-color: #F4F4F6; background: rgba(255, 255, 255, .1); }
+    .pick-btn b { display: block; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.05rem; color: #F4F4F6; }
+    .pick-btn span { font-size: 11px; color: #9A9AA8; }
+    .quote-try { display: flex; gap: .8rem; align-items: center; padding: .7rem; border-radius: 14px; background: rgba(123, 163, 216, .07); border: 1px solid rgba(123, 163, 216, .3); }
+    .quote-try img { width: 84px; height: 84px; object-fit: cover; border-radius: 10px; flex: none; }
+    .price-grid input { width: 100%; min-width: 0; background: #070709; border: 1px solid rgba(255, 255, 255, .15); padding: .3rem .4rem; font: 12px 'JetBrains Mono', monospace; color: #fff; }
+  </style>
+
 </head>
 <body class="antialiased selection:bg-alabaster selection:text-obsidian">
   <!-- Ícones desenhados no próprio site (antes vinham de um CDN externo) -->
@@ -650,6 +679,15 @@
             <button type="button" id="saveToSiteBtn" onclick="saveToSite()" class="px-4 py-2.5 bg-alabaster hover:bg-white text-obsidian font-mono text-xs uppercase font-semibold rounded-sm transition">Salvar no site</button>
           </div>
           <p id="saveToSiteStatus" class="text-[11px] font-mono text-mist"></p>
+        </div>
+        <div class="price-grid bg-charcoal border border-white/15 p-4 space-y-2">
+          <h3 class="font-serif text-xl text-alabaster">Tabela de preços do orçamento</h3>
+          <p class="text-[11px] text-mist">A faixa que o cliente vê (R$ mínimo – máximo) para cada nível de detalhe e tamanho. A cor soma uma porcentagem, e a região e a cobertura somam o ajuste que já existia.</p>
+          <div id="pricingEditor"></div>
+          <div class="flex items-center gap-3 flex-wrap pt-1">
+            <button type="button" onclick="savePricingFromAdmin()" class="bg-alabaster text-obsidian px-4 py-2 text-xs font-mono font-semibold hover:bg-white">GUARDAR TABELA</button>
+            <p id="pricingStatus" class="text-[11px] font-mono text-mist"></p>
+          </div>
         </div>
         <form id="flashAdminForm" onsubmit="saveFlashFromAdmin(event)" class="bg-charcoal border border-white/15 p-4 space-y-3">
           <div class="flex items-center justify-between gap-3">
@@ -904,6 +942,7 @@
 
     <!-- 1. HERO COM LOGO TRANSPARENTE ANIMADA -->
     <div id="inicio" class="pt-6 pb-4 px-4 relative overflow-hidden has-art">
+      <i class="fili fili-tr" aria-hidden="true"></i><i class="fili fili-bl fili-sm" aria-hidden="true"></i>
       <div class="art-bg art-hero" aria-hidden="true"></div>
       <div class="max-w-4xl mx-auto flex flex-col items-center text-center">
 
@@ -988,7 +1027,8 @@
     </div>
 
     <!-- SEÇÃO PORTFÓLIO (obras realizadas na página inicial) -->
-    <div id="portfolio" class="py-16 px-4 border-b border-white/10">
+    <div id="portfolio" class="py-16 px-4 border-b border-white/10 has-art">
+      <i class="fili fili-tl" aria-hidden="true"></i><i class="fili fili-br fili-sm" aria-hidden="true"></i>
       <div class="max-w-6xl mx-auto">
         <h2 class="font-serif text-3xl sm:text-4xl text-alabaster mt-1 mb-8">Portfólio</h2>
 
@@ -1000,6 +1040,7 @@
 
     <!-- SEÇÃO SOBRE MIM & LOCAIS DE ATENDIMENTO -->
     <div class="py-16 px-4 border-b border-white/10 has-art">
+      <i class="fili fili-br" aria-hidden="true"></i>
       <div class="art-bg art-lanca" aria-hidden="true"></div>
       <!-- ✏️ EDITE AQUI: SOBRE MIM -->
       <div class="max-w-3xl mx-auto">
@@ -1033,6 +1074,7 @@
 
         <!-- SEÇÃO DE REVIEWS & DEPOIMENTOS DE CLIENTES -->
     <div id="reviews" class="py-16 px-4 border-b border-white/10 bg-charcoal/30 has-art">
+      <i class="fili fili-tl fili-sm" aria-hidden="true"></i>
       <div class="art-bg art-vermelha" aria-hidden="true"></div>
       <div class="max-w-6xl mx-auto">
         <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
@@ -1110,6 +1152,7 @@
 
     <!-- Catálogo de Flashes -->
     <div id="flashes" class="py-16 px-4 border-b border-white/10 has-art">
+      <i class="fili fili-tr" aria-hidden="true"></i><i class="fili fili-bl" aria-hidden="true"></i>
       <div class="art-bg art-rosa" aria-hidden="true"></div>
       <div class="max-w-6xl mx-auto">
         
@@ -1183,7 +1226,7 @@
         
         <div class="mb-10">
           <h2 class="font-serif text-3xl sm:text-4xl text-alabaster mt-1">Orçamento Simulado &amp; Agendamento</h2>
-          <p class="text-mist text-sm mt-1">Selecione a região do corpo, o tamanho em centímetros e envie a ficha pronta para a DM da Morgan.</p>
+          <p class="text-mist text-sm mt-1">Escolha a região, o tamanho, o nível de detalhe e as cores, e mande a ficha pronta para a Morgan. Dá para trazer a prévia do Provador.</p>
         </div>
 
         <!-- Aviso de Flash Selecionado -->
@@ -1240,12 +1283,32 @@
                 <label for="cmSlider" class="text-xs font-mono uppercase text-mist">3. Tamanho Aproximado:</label>
                 <span id="cmBadge" class="text-sm font-mono font-semibold text-alabaster bg-white/10 px-2.5 py-0.5 rounded">16 cm</span>
               </div>
-              <input id="cmSlider" type="range" min="5" max="35" value="16" oninput="updateQuote()" class="w-full accent-alabaster cursor-pointer">
+              <input id="cmSlider" type="range" min="3" max="45" step="0.5" value="16" oninput="updateQuote()" class="w-full accent-alabaster cursor-pointer">
               <div class="flex justify-between text-[10px] font-mono text-mist mt-1">
-                <span>5 cm (Minimal)</span>
-                <span>15 cm (Médio)</span>
-                <span>25 cm (Grande)</span>
-                <span>35 cm (Fechamento)</span>
+                <span>3 cm</span>
+                <span>15 cm</span>
+                <span>30 cm</span>
+                <span>45 cm</span>
+              </div>
+              <p class="text-[10px] font-mono text-mist mt-1">Medida pelo lado maior do desenho.</p>
+            </div>
+
+            <!-- Nível de detalhe -->
+            <div>
+              <label class="block text-xs font-mono uppercase text-mist mb-2">4. Nível de detalhe:</label>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <button type="button" data-detail="simples" onclick="setDetail('simples')" class="pick-btn"><b>Simples</b><span>Traço fino, pouco preenchimento</span></button>
+                <button type="button" data-detail="medio" onclick="setDetail('medio')" class="pick-btn is-on"><b>Médio</b><span>Sombra ou pontilhado leve</span></button>
+                <button type="button" data-detail="alto" onclick="setDetail('alto')" class="pick-btn"><b>Muito detalhado</b><span>Sombra, textura, muitos elementos</span></button>
+              </div>
+            </div>
+
+            <!-- Cores -->
+            <div>
+              <label class="block text-xs font-mono uppercase text-mist mb-2">5. Cores:</label>
+              <div class="grid grid-cols-2 gap-2">
+                <button type="button" data-color="pb" onclick="setColor('pb')" class="pick-btn is-on"><b>Preto e cinza</b><span>Blackwork</span></button>
+                <button type="button" data-color="cor" onclick="setColor('cor')" class="pick-btn"><b>Com cor</b><span>Um ou mais tons</span></button>
               </div>
             </div>
 
@@ -1280,6 +1343,15 @@
             </div>
 
             <div class="p-5 space-y-4">
+              <div id="quoteTryOn" class="quote-try hidden">
+                <img id="quoteTryOnImg" alt="Prévia do Provador">
+                <div class="min-w-0">
+                  <span class="text-[10px] font-mono uppercase text-mist block">Prévia do Provador</span>
+                  <span id="quoteTryOnDims" class="text-sm text-alabaster block"></span>
+                  <span class="text-[10px] text-mist block mt-0.5">A imagem só sai do seu aparelho se você enviar.</span>
+                  <button type="button" onclick="clearTryOnQuote()" class="text-[11px] font-mono text-mist hover:text-white underline mt-1">tirar prévia</button>
+                </div>
+              </div>
               <div class="grid grid-cols-2 gap-3 bg-charcoal p-3.5 rounded-sm border border-white/10">
                 <div>
                   <span class="text-[10px] font-mono uppercase text-mist block">Sessão Estimada</span>
@@ -1301,9 +1373,10 @@
 
               <button type="button" onclick="copyAndSendDM()" class="w-full bg-alabaster hover:bg-white text-obsidian py-3 px-4 rounded-sm font-serif lowercase tracking-[0.18em] text-base font-bold transition flex items-center justify-center gap-2 shadow-lg">
                 <svg class="ico text-lg" aria-hidden="true"><use href="#i-insta"/></svg>
-                <span>copiar ficha &amp; abrir dm</span>
+                <span>enviar pra morgan</span>
               </button>
               <p id="copyFeedback" class="text-center text-xs font-mono navy-glow-text hidden">✓ Ficha copiada! Cole na DM da @_morgantattoo.</p>
+              <p class="text-[10px] text-mist text-center">*Estimativa pela tabela da Morgan. O valor final ela confirma na conversa.</p>
             </div>
           </div>
 
@@ -1364,6 +1437,7 @@
     </header>
 
     <div id="provador" class="py-16 px-4 border-b border-white/10 has-art">
+      <i class="fili fili-tl fili-sm" aria-hidden="true"></i><i class="fili fili-br fili-sm" aria-hidden="true"></i>
       <svg class="art-spiral-bg" aria-hidden="true"><use href="#i-spiral"/></svg>
       <div class="max-w-6xl mx-auto">
         <div class="mb-8">
@@ -1415,17 +1489,32 @@
               <label class="block text-[11px] font-mono uppercase text-mist mb-1" for="tryArt">Desenho</label>
               <select id="tryArt" onchange="tryPickArt(this.value)" class="w-full bg-obsidian border border-white/15 rounded-sm px-3 py-2 text-sm text-alabaster"></select>
               <input id="tryOwnArt" type="file" accept="image/*" class="sr-only" onchange="tryLoadOwnArt(this)">
+              <div id="tryBgBox" class="try-sub hidden">
+                <label class="flex items-center gap-2 text-xs text-alabaster"><input id="tryBgOn" type="checkbox" checked onchange="tryState.bgOn = this.checked; tryRebuildArt()" class="accent-alabaster"> Tirar o fundo do desenho</label>
+                <div class="try-range"><label for="tryBgTol">Limpeza</label><input id="tryBgTol" type="range" min="4" max="80" step="1" value="22" onchange="tryState.bgTol = +this.value; tryRebuildArt()"><output id="tryBgTolOut">22</output></div>
+                <p class="text-[11px] text-mist mt-1">Se sumir parte do traço, diminua. Se sobrar sujeira do papel, aumente.</p>
+              </div>
               <div class="try-range"><label for="tryCm">Tamanho</label><input id="tryCm" type="range" min="1" max="45" step="0.5" value="10" oninput="tryState.sizeCm = +this.value; tryUpdateUi(); tryDraw()"><output id="tryCmOut">10 cm</output></div>
               <div class="try-range"><label for="tryRot">Giro</label><input id="tryRot" type="range" min="-180" max="180" step="1" value="0" oninput="tryState.rot = +this.value; tryUpdateUi(); tryDraw()"><output id="tryRotOut">0°</output></div>
               <div class="try-range"><label for="tryOpacity">Tinta</label><input id="tryOpacity" type="range" min="30" max="100" step="1" value="88" oninput="tryState.opacity = this.value / 100; tryUpdateUi(); tryDraw()"><output id="tryOpacityOut">88%</output></div>
               <label class="flex items-center gap-2 text-xs text-mist mt-1"><input id="tryInk" type="checkbox" checked onchange="tryState.ink = this.checked; tryDraw()" class="accent-alabaster"> Misturar com a pele (efeito tinta)</label>
+              <p id="tryDims" class="try-dims"></p>
+              <p class="text-[11px] text-mist mt-1">O tamanho vale para o traço do desenho (sem a margem vazia), pelo lado maior.</p>
               <p class="text-[11px] text-mist mt-2">No celular: arraste com um dedo, use dois dedos para aumentar e girar. No computador: arraste, e use a rodinha (com Shift, gira).</p>
+              <div class="try-sub">
+                <div class="flex flex-wrap gap-2">
+                  <button type="button" id="tryMeshBtn" onclick="tryToggleMesh()" class="try-btn try-btn-ghost try-btn-sm">Encaixar no corpo (malha)</button>
+                  <button type="button" id="tryMeshReset" onclick="tryResetMesh()" class="try-btn try-btn-ghost try-btn-sm">Desfazer malha</button>
+                </div>
+                <p class="text-[11px] text-mist mt-2">Puxe os 9 pontos para curvar o desenho como na pele. <strong class="text-alabaster">A medida em cm vale para o desenho reto, sem a malha</strong>: ao entortar, ele pode ficar um pouco maior ou menor na pele.</p>
+              </div>
             </div>
 
             <div class="flex gap-2">
               <button type="button" id="tryDownloadBtn" onclick="tryDownload()" class="try-btn flex-1">Baixar imagem</button>
               <button type="button" id="tryResetBtn" onclick="tryReset()" class="try-btn try-btn-ghost">Recomeçar</button>
             </div>
+            <button type="button" id="tryQuoteBtn" onclick="trySendToQuote()" class="try-btn w-full">Levar pro orçamento ✦</button>
             <p class="text-[11px] text-mist">É uma estimativa: em partes curvas (braço, costela) o tamanho real muda um pouco. A Morgan ajusta tudo no dia.</p>
           </aside>
         </div>
@@ -1518,7 +1607,8 @@
 
 
   <!-- FOOTER GERAL (visível em todas as páginas) -->
-  <footer class="py-10 px-4 text-center text-xs font-mono text-mist border-t border-white/10">
+  <footer class="py-10 px-4 text-center text-xs font-mono text-mist border-t border-white/10 has-art">
+    <i class="fili fili-tl fili-sm" aria-hidden="true"></i><i class="fili fili-tr fili-sm" aria-hidden="true"></i>
     <div class="moon-phases mb-8" aria-hidden="true"><i class="moon m0"></i><i class="moon m1"></i><i class="moon m2"></i><i class="moon m3"></i><i class="moon m4"></i><i class="moon m5"></i><i class="moon m6"></i><i class="moon m7"></i><i class="moon m8"></i></div>
     <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
       <div class="morgan-wordmark text-base text-alabaster">morgan tattoo</div>
@@ -1626,6 +1716,8 @@
     // Conteúdo publicado: vem de data/items.js (gravado pelo botão "Salvar no site").
     // O que você cadastra no painel e ainda não salvou no site fica só neste navegador (rascunho).
     const SITE_ITEMS = window.SITE_ITEMS || null;
+    // Painel de conteúdo só no arquivo local; no site publicado fica desligado
+    const IS_LOCAL = location.protocol === 'file:' || ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname);
     const withLocalPath = u => (typeof u === 'string' && u && !/^(https?:|data:|\.\.?\/)/i.test(u)) ? './' + u : u;
     const DEFAULT_FLASHES = (SITE_ITEMS?.flashes || []).map(f => ({ ...f, image: withLocalPath(f.image) }));
     const hasDraft = () => { try { return localStorage.getItem('morgan_draft_v1') === '1'; } catch (e) { return false; } };
@@ -2044,8 +2136,92 @@
       zone: 'Antebraço',
       pain: 2,
       mult: 1.0,
-      selectedFlash: null
+      selectedFlash: null,
+      detail: 'medio',
+      color: 'pb',
+      tryOn: null
     };
+
+    // Tabela de preços: faixa (mín–máx em R$) por nível de detalhe e tamanho. A Morgan edita no painel.
+    const DETAIL_LABEL = { simples: 'Simples', medio: 'Médio', alto: 'Muito detalhado' };
+    const STARTER_PRICING = { // valores iniciais, para a Morgan trocar pelos dela
+      bands: [10, 20, 30],
+      levels: {
+        simples: [[330, 400], [500, 610], [680, 820], [860, 1030]],
+        medio: [[410, 490], [630, 760], [850, 1020], [1070, 1280]],
+        alto: [[530, 640], [820, 990], [1110, 1330], [1390, 1670]]
+      },
+      corPct: 20
+    };
+    function normalizePricing(p) {
+      if (!p || typeof p !== 'object') return null;
+      const num = (v, lo, hi) => { const n = Number(v); return Number.isFinite(n) ? Math.min(hi, Math.max(lo, Math.round(n))) : null; };
+      const bands = Array.isArray(p.bands) ? p.bands.slice(0, 3).map(v => num(v, 1, 100)) : [];
+      if (bands.length !== 3 || bands.includes(null) || !(bands[0] < bands[1] && bands[1] < bands[2])) return null;
+      const levels = {};
+      for (const k of ['simples', 'medio', 'alto']) {
+        const rows = p.levels && Array.isArray(p.levels[k]) ? p.levels[k] : null;
+        if (!rows || rows.length !== 4) return null;
+        levels[k] = rows.map(r => { const a = num(r && r[0], 0, 100000), b = num(r && r[1], 0, 100000); return a === null || b === null ? null : [Math.min(a, b), Math.max(a, b)]; });
+        if (levels[k].includes(null)) return null;
+      }
+      const corPct = num(p.corPct, 0, 300);
+      return { bands, levels, corPct: corPct === null ? 0 : corPct };
+    }
+    const DEFAULT_PRICING = normalizePricing(SITE_ITEMS?.pricing) || STARTER_PRICING;
+    let PRICING = (() => {
+      if (IS_LOCAL && useSavedData()) { try { const saved = normalizePricing(JSON.parse(localStorage.getItem('morgan_pricing_v1'))); if (saved) return saved; } catch (e) {} }
+      return DEFAULT_PRICING;
+    })();
+
+    function setDetail(level) {
+      state.detail = level;
+      document.querySelectorAll('[data-detail]').forEach(b => b.classList.toggle('is-on', b.dataset.detail === level));
+      updateQuote();
+    }
+    function setColor(color) {
+      state.color = color;
+      document.querySelectorAll('[data-color]').forEach(b => b.classList.toggle('is-on', b.dataset.color === color));
+      updateQuote();
+    }
+
+    // Chegando do Provador: tamanho certo + prévia (a imagem fica só na memória desta aba)
+    function quoteFromTryOn(t) {
+      clearTryOnQuote(true);
+      state.tryOn = { ...t, url: URL.createObjectURL(t.blob) };
+      const slider = document.getElementById('cmSlider');
+      if (slider) slider.value = Math.min(45, Math.max(3, Math.round(t.size * 2) / 2));
+      if (t.flash) {
+        state.selectedFlash = t.flash;
+        setMode('Flash Disponível');
+        document.getElementById('flashNotice')?.classList.remove('hidden');
+        const nn = document.getElementById('flashNoticeName'); if (nn) nn.textContent = `${t.flash.title} (R$ ${t.flash.price})`;
+      } else if (state.mode === 'Flash Disponível') {
+        clearFlashSelection(); setMode('Autoral Exclusiva');
+      }
+      document.getElementById('quoteTryOnImg').src = state.tryOn.url;
+      document.getElementById('quoteTryOnDims').textContent = `${quoteFmtCm(t.w)} × ${quoteFmtCm(t.h)} cm` + (t.mesh ? ' (sem malha)' : '');
+      document.getElementById('quoteTryOn').classList.remove('hidden');
+      updateQuote();
+      showPage('orcamento');
+    }
+    function clearTryOnQuote(silent) {
+      if (state.tryOn?.url) URL.revokeObjectURL(state.tryOn.url);
+      state.tryOn = null;
+      document.getElementById('quoteTryOn')?.classList.add('hidden');
+      const img = document.getElementById('quoteTryOnImg'); if (img) img.removeAttribute('src');
+      if (!silent) updateQuote();
+    }
+    const quoteFmtCm = v => (Math.round(v * 10) / 10).toFixed(1).replace('.', ',');
+
+    function priceRange(cm) {
+      const P = PRICING, band = cm <= P.bands[0] ? 0 : cm <= P.bands[1] ? 1 : cm <= P.bands[2] ? 2 : 3;
+      let [min, max] = P.levels[state.detail][band];
+      let f = state.mult;
+      if (state.color === 'cor') f *= 1 + P.corPct / 100;
+      if (state.mode === 'Cobertura / Reforma') f *= 1.25;
+      return [Math.round(min * f / 10) * 10, Math.round(max * f / 10) * 10];
+    }
 
     function setMode(mode) {
       state.mode = mode;
@@ -2108,19 +2284,16 @@
     function updateQuote() {
       const slider = document.getElementById('cmSlider');
       if (!slider) return;
-      const cm = parseInt(slider.value, 10);
+      const cm = parseFloat(slider.value) || 16;
       const badge = document.getElementById('cmBadge');
-      if (badge) badge.textContent = `${cm} cm`;
-
-      let base = (300 + cm * 22) * state.mult;
-      if (state.mode === 'Cobertura / Reforma') base *= 1.25;
+      if (badge) badge.textContent = `${String(cm).replace('.', ',')} cm`;
 
       let priceStr = '';
       if (state.selectedFlash && state.mode === 'Flash Disponível') {
         priceStr = `R$ ${state.selectedFlash.price} (Valor Fixo Flash)`;
+        if (state.selectedFlash.cm && Math.abs(cm - Number(state.selectedFlash.cm)) >= 2) priceStr += ' • tamanho diferente do original: a Morgan confirma';
       } else {
-        const min = Math.round(base / 10) * 10;
-        const max = Math.round((base * 1.2) / 10) * 10;
+        const [min, max] = priceRange(cm);
         priceStr = `R$ ${min} – R$ ${max}`;
       }
 
@@ -2139,20 +2312,23 @@
       const time = clientTimeEl?.value || 'Semana à Tarde';
       const notes = clientNotesEl?.value.trim() || 'Quero agendar uma tattoo na estética Blackwork/Dark da Morgan.';
       const flashLine = state.selectedFlash ? `\n• Flash Escolhido: ${state.selectedFlash.id} (${state.selectedFlash.title})` : '';
+      const t = state.tryOn;
+      const tryLine = t ? `\n• Provador: ${quoteFmtCm(t.w)} × ${quoteFmtCm(t.h)} cm${t.mesh ? ' (sem malha)' : ''}, prévia em anexo` : '';
 
       if (textOutputEl) {
         textOutputEl.textContent =
 `✦ ORÇAMENTO MORGAN TATTOO (@_morgantattoo) ✦
 • Nome: ${name}
 • Modalidade: ${state.mode}${flashLine}
-• Região: ${state.zone} (${cm} cm)
+• Região: ${state.zone} (${String(cm).replace('.', ',')} cm)${tryLine}
+• Detalhe: ${DETAIL_LABEL[state.detail]} • Cores: ${state.color === 'cor' ? 'Com cor' : 'Preto e cinza'}
 • Disponibilidade: ${time}
 • Estimativa: ${priceStr}
 • Ideia: "${notes}"`;
       }
     }
 
-    function copyAndSendDM() {
+    async function copyAndSendDM() {
       const textEl = document.getElementById('quoteTextOutput');
       if (!textEl) return;
       const text = textEl.textContent;
@@ -2164,8 +2340,55 @@
       document.body.removeChild(area);
 
       const fb = document.getElementById('copyFeedback');
-      if (fb) fb.classList.remove('hidden');
-      window.open('https://www.instagram.com/_morgantattoo/', '_blank', 'noopener,noreferrer');
+      const t = state.tryOn;
+      // Celular: abre o "compartilhar" com a prévia + a ficha (a pessoa escolhe Instagram ou WhatsApp)
+      if (t?.blob && navigator.canShare) {
+        const file = new File([t.blob], 'previa-tattoo-morgan.jpg', { type: 'image/jpeg' });
+        if (navigator.canShare({ files: [file] })) {
+          try {
+            await navigator.share({ files: [file], text });
+            if (fb) { fb.textContent = '✓ Se a ficha não apareceu junto, cole na conversa: ela já está copiada.'; fb.classList.remove('hidden'); }
+            return;
+          } catch (e) { if (e?.name === 'AbortError') return; }
+        }
+      }
+      if (t?.url) { // computador: baixa a prévia para anexar na DM
+        const a = document.createElement('a'); a.href = t.url; a.download = 'previa-tattoo-morgan.jpg';
+        document.body.appendChild(a); a.click(); a.remove();
+      }
+      if (fb) { fb.textContent = t ? '✓ Ficha copiada e prévia baixada! Na DM da @_morgantattoo, cole a ficha e anexe a imagem.' : '✓ Ficha copiada! Cole na DM da @_morgantattoo.'; fb.classList.remove('hidden'); }
+      window.open('https://ig.me/m/_morgantattoo', '_blank', 'noopener,noreferrer');
+    }
+
+    // ----- Painel: tabela de preços -----
+    function renderPricingEditor() {
+      const box = document.getElementById('pricingEditor');
+      if (!box) return;
+      const P = PRICING, b = P.bands;
+      const heads = [`até ${b[0]} cm`, `${b[0]}–${b[1]} cm`, `${b[1]}–${b[2]} cm`, `mais de ${b[2]} cm`];
+      const cell = (k, i, j) => `<input type="number" min="0" step="10" inputmode="numeric" data-k="${k}" data-i="${i}" data-j="${j}" value="${P.levels[k][i][j]}" aria-label="${DETAIL_LABEL[k]}, ${heads[i]}, ${j ? 'máximo' : 'mínimo'}">`;
+      box.innerHTML = `
+        <div class="grid grid-cols-3 gap-2 text-[11px] font-mono text-mist">
+          ${b.map((v, i) => `<label>Faixa ${i + 1} até (cm)<input type="number" min="1" max="100" data-band="${i}" value="${v}"></label>`).join('')}
+        </div>
+        <div class="overflow-x-auto"><table class="w-full text-[11px] font-mono text-mist mt-2 border-separate border-spacing-1">
+          <tr><th></th>${heads.map(h => `<th class="font-normal text-left">${h}<br><span class="text-[10px]">mín / máx R$</span></th>`).join('')}</tr>
+          ${['simples', 'medio', 'alto'].map(k => `<tr><td class="text-alabaster pr-1">${DETAIL_LABEL[k]}</td>${[0, 1, 2, 3].map(i => `<td><div class="flex gap-1">${cell(k, i, 0)}${cell(k, i, 1)}</div></td>`).join('')}</tr>`).join('')}
+        </table></div>
+        <label class="block text-[11px] font-mono text-mist mt-2">Com cor soma (%) <input id="pricingCor" type="number" min="0" max="300" value="${P.corPct}" class="!w-24"></label>`;
+    }
+    function savePricingFromAdmin() {
+      if (!IS_LOCAL) return;
+      const box = document.getElementById('pricingEditor');
+      const next = { bands: [0, 1, 2].map(i => box.querySelector(`[data-band="${i}"]`).value), levels: {}, corPct: document.getElementById('pricingCor').value };
+      for (const k of ['simples', 'medio', 'alto']) next.levels[k] = [0, 1, 2, 3].map(i => [0, 1].map(j => box.querySelector(`[data-k="${k}"][data-i="${i}"][data-j="${j}"]`).value));
+      const ok = normalizePricing(next);
+      const st = document.getElementById('pricingStatus');
+      if (!ok) { st.textContent = 'Confira: as faixas precisam crescer (ex.: 10, 20, 30) e todo campo precisa de número.'; return; }
+      PRICING = ok;
+      try { localStorage.setItem('morgan_pricing_v1', JSON.stringify(PRICING)); markDraft(); } catch (e) {}
+      renderPricingEditor(); updateQuote();
+      st.textContent = 'Tabela guardada. Clique em "Salvar no site" para valer no site publicado.';
     }
 
 
@@ -2240,10 +2463,11 @@
         const out = {
           flashes: FLASHES.map(({ svg, ...f }) => f),
           portfolio: PORTFOLIO,
-          reviews: REVIEWS
+          reviews: REVIEWS,
+          pricing: PRICING
         };
         await writeInto(dir, 'data/items.js', 'window.SITE_ITEMS = ' + JSON.stringify(out, null, 2) + ';\n');
-        try { localStorage.setItem('morgan_flashes_v3', JSON.stringify(FLASHES)); localStorage.setItem('morgan_portfolio_v1', JSON.stringify(PORTFOLIO)); localStorage.setItem('morgan_reviews_v2', JSON.stringify(REVIEWS)); localStorage.removeItem('morgan_draft_v1'); } catch (e) {}
+        try { localStorage.setItem('morgan_flashes_v3', JSON.stringify(FLASHES)); localStorage.setItem('morgan_portfolio_v1', JSON.stringify(PORTFOLIO)); localStorage.setItem('morgan_reviews_v2', JSON.stringify(REVIEWS)); localStorage.setItem('morgan_pricing_v1', JSON.stringify(PRICING)); localStorage.removeItem('morgan_draft_v1'); } catch (e) {}
         renderFlashes(); renderPortfolio(); renderAdminList(); renderPortfolioAdminList();
         status.textContent = `Pronto: ${FLASHES.length} flashes, ${PORTFOLIO.length} posts e ${REVIEWS.length} depoimentos gravados (${copied} fotos copiadas). Falta só publicar.`
           + (notCopied.length ? ` Não consegui baixar estas fotos de link (continuam como link): ${notCopied.join(', ')}.` : '');
@@ -2252,9 +2476,6 @@
         else { status.textContent = 'Não salvou: ' + (error?.message || error); console.error(error); }
       } finally { btn.disabled = false; }
     }
-
-    // Painel de conteúdo só no arquivo local; no site publicado fica desligado
-    const IS_LOCAL = location.protocol === 'file:' || ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname);
 
     function toggleAdminModal(forceOpen) {
       if (!IS_LOCAL) return;
@@ -3090,6 +3311,7 @@
         document.body.classList.add('admin-on');
         document.getElementById('adminAccess')?.classList.remove('hidden');
         document.getElementById('addReviewLocalBtn')?.classList.remove('hidden');
+        renderPricingEditor();
       } else {
         document.getElementById('addReviewLocalBtn')?.remove();
         document.getElementById('adminAccess')?.remove();
@@ -3117,7 +3339,7 @@
     // As posições ficam em pixels da FOTO; a tela só converte na hora de desenhar.
     // =========================================================
     const CARD_CM = { long: 8.56, short: 5.398 }; // cartão padrão ISO/IEC 7810 ID-1
-    const tryState = { step: 0, photo: null, photoUrl: null, a: null, b: null, edge: 'long', art: null, artUrl: null, artId: '', cx: 0, cy: 0, sizeCm: 10, rot: 0, opacity: 0.88, ink: true, view: null };
+    const tryState = { step: 0, photo: null, photoUrl: null, a: null, b: null, edge: 'long', art: null, artSrc: null, artSmall: null, artOpaque: false, bgOn: true, bgTol: 22, artUrl: null, artId: '', cx: 0, cy: 0, sizeCm: 10, rot: 0, opacity: 0.88, ink: true, view: null, mesh: null, meshEdit: false };
     let tryCtx = null, tryRaf = 0;
     const tryEl = id => document.getElementById(id);
     const tryPxPerCm = () => tryState.a && tryState.b ? Math.hypot(tryState.b.x - tryState.a.x, tryState.b.y - tryState.a.y) / CARD_CM[tryState.edge] : 0;
@@ -3147,7 +3369,10 @@
           // pega o ponto do cartão mais próximo (área de toque generosa para o dedo)
           const near = ['a', 'b'].map(k => ({ k, d: Math.hypot(tryToScreen(tryState[k]).x - pt.x, tryToScreen(tryState[k]).y - pt.y) })).sort((m, n) => m.d - n.d)[0];
           drag = near.d < 34 ? { type: 'handle', key: near.k } : null;
-        } else if (tryState.step === 2 && tryState.art) startGesture();
+        } else if (tryState.step === 2 && tryState.art) {
+          const node = pointers.size === 1 && tryState.meshEdit ? tryNearestNode(pt) : -1;
+          if (node >= 0) drag = { type: 'node', idx: node }; else startGesture();
+        }
       });
       canvas.addEventListener('pointermove', e => {
         if (!pointers.has(e.pointerId)) return;
@@ -3157,6 +3382,10 @@
         if (drag.type === 'handle') {
           const p = tryToPhoto(pt);
           tryState[drag.key] = { x: Math.min(Math.max(p.x, 0), tryState.photo.naturalWidth), y: Math.min(Math.max(p.y, 0), tryState.photo.naturalHeight) };
+        } else if (drag.type === 'node') {
+          const n = tryScreenToArt(pt);
+          tryState.mesh[drag.idx * 2] = Math.min(1.6, Math.max(-0.6, n.x));
+          tryState.mesh[drag.idx * 2 + 1] = Math.min(1.6, Math.max(-0.6, n.y));
         } else if (drag.type === 'move') {
           const p = tryToPhoto(pt);
           tryState.cx = drag.cx + (p.x - drag.from.x);
@@ -3224,26 +3453,92 @@
       img.src = src;
     }
 
-    // Corta a margem vazia (transparente ou branca) em volta do desenho,
-    // para o "tamanho em cm" valer para o traço e não para o arquivo inteiro.
-    function tryTrimArt(img) {
-      const k = Math.min(1, 2000 / Math.max(img.naturalWidth, img.naturalHeight));
-      const c = document.createElement('canvas');
-      c.width = Math.max(1, Math.round(img.naturalWidth * k)); c.height = Math.max(1, Math.round(img.naturalHeight * k));
+    // Prepara o desenho: tira o fundo (se não for transparente) e corta a margem vazia,
+    // para o "tamanho em cm" valer só para o traço e não para o arquivo inteiro.
+    function tryPrepareArt(img, removeBg, tol) {
+      const nw = img.naturalWidth || img.width, nh = img.naturalHeight || img.height;
+      const k = Math.min(1, 1600 / Math.max(nw, nh));
+      const W = Math.max(1, Math.round(nw * k)), H = Math.max(1, Math.round(nh * k));
+      const c = document.createElement('canvas'); c.width = W; c.height = H;
       const ctx = c.getContext('2d', { willReadFrequently: true });
-      ctx.drawImage(img, 0, 0, c.width, c.height);
-      let data;
-      try { data = ctx.getImageData(0, 0, c.width, c.height).data; } catch (e) { return img; } // imagem de outro site sem permissão: usa inteira
-      let x0 = c.width, y0 = c.height, x1 = -1, y1 = -1;
-      for (let y = 0; y < c.height; y++) for (let x = 0; x < c.width; x++) {
-        const i = (y * c.width + x) * 4;
-        if (data[i + 3] > 24 && data[i] + data[i + 1] + data[i + 2] < 705) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+      ctx.drawImage(img, 0, 0, W, H);
+      let im;
+      try { im = ctx.getImageData(0, 0, W, H); } catch (e) { return { canvas: img, opaque: false }; } // imagem de outro site sem permissão: usa inteira
+      const d = im.data;
+      // A borda já é transparente? Então o desenho já vem sem fundo.
+      let border = 0, clear = 0; const rs = [], gs = [], bs = [];
+      const visit = (x, y) => { const i = (y * W + x) * 4; border++; if (d[i + 3] < 200) clear++; else { rs.push(d[i]); gs.push(d[i + 1]); bs.push(d[i + 2]); } };
+      for (let x = 0; x < W; x += 2) { visit(x, 0); visit(x, H - 1); }
+      for (let y = 0; y < H; y += 2) { visit(0, y); visit(W - 1, y); }
+      const opaque = clear / border < 0.5;
+      const removed = opaque && removeBg;
+      if (removed) {
+        const med = a => { a.sort((m, n) => m - n); return a[a.length >> 1] || 0; };
+        const bg = [med(rs), med(gs), med(bs)];
+        tryRemoveBg(d, W, H, tol, bg);
+        ctx.putImageData(im, 0, 0);
       }
-      if (x1 < 0) return img;
+      // Caixa do traço: ignora poeira isolada perto das bordas
+      const cols = new Uint32Array(W), rows = new Uint32Array(H); let total = 0;
+      for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+        const i = (y * W + x) * 4;
+        if (d[i + 3] > 24 && (removed || d[i] + d[i + 1] + d[i + 2] < 705)) { cols[x]++; rows[y]++; total++; }
+      }
+      if (!total) return { canvas: c, opaque };
+      const cut = Math.max(2, total * 0.0002);
+      const edge = (arr, from, step) => { let acc = 0, i = from; while (i >= 0 && i < arr.length) { acc += arr[i]; if (acc > cut) return i; i += step; } return from; };
+      const x0 = edge(cols, 0, 1), x1 = edge(cols, W - 1, -1), y0 = edge(rows, 0, 1), y1 = edge(rows, H - 1, -1);
+      if (x1 < x0 || y1 < y0) return { canvas: c, opaque };
       const out = document.createElement('canvas');
       out.width = x1 - x0 + 1; out.height = y1 - y0 + 1;
       out.getContext('2d').drawImage(c, x0, y0, out.width, out.height, 0, 0, out.width, out.height);
-      return out;
+      return { canvas: out, opaque };
+    }
+
+    // Tira o fundo comparando cada ponto com o papel em volta (aguenta sombra e luz desigual na foto do papel).
+    function tryRemoveBg(d, W, H, tol, bg) {
+      const light = bg[0] * 0.299 + bg[1] * 0.587 + bg[2] * 0.114 >= 110; // papel claro com traço escuro (o normal)
+      const B = Math.max(8, Math.round(Math.max(W, H) / 40));
+      const gw = Math.ceil(W / B), gh = Math.ceil(H / B);
+      const grid = new Float32Array(gw * gh * 3);
+      for (let gy = 0; gy < gh; gy++) for (let gx = 0; gx < gw; gx++) {
+        let best = -1, br = bg[0], bgc = bg[1], bb = bg[2];
+        for (let y = gy * B; y < Math.min(H, gy * B + B); y += 2) for (let x = gx * B; x < Math.min(W, gx * B + B); x += 2) {
+          const i = (y * W + x) * 4, l = d[i] * 0.299 + d[i + 1] * 0.587 + d[i + 2] * 0.114, v = light ? l : 255 - l;
+          if (v > best) { best = v; br = d[i]; bgc = d[i + 1]; bb = d[i + 2]; }
+        }
+        // bloco todo pintado (não tem papel): usa a cor do papel da borda
+        if (Math.max(Math.abs(br - bg[0]), Math.abs(bgc - bg[1]), Math.abs(bb - bg[2])) > 60) { br = bg[0]; bgc = bg[1]; bb = bg[2]; }
+        const g = (gy * gw + gx) * 3; grid[g] = br; grid[g + 1] = bgc; grid[g + 2] = bb;
+      }
+      const at = (gx, gy, ch) => grid[(Math.min(gh - 1, Math.max(0, gy)) * gw + Math.min(gw - 1, Math.max(0, gx))) * 3 + ch];
+      const t0 = tol, span = 48;
+      for (let y = 0; y < H; y++) {
+        const fy = (y + 0.5) / B - 0.5, gy = Math.floor(fy), ty = fy - gy;
+        for (let x = 0; x < W; x++) {
+          const fx = (x + 0.5) / B - 0.5, gx = Math.floor(fx), tx = fx - gx;
+          const i = (y * W + x) * 4; let diff = 0; const local = [0, 0, 0];
+          for (let ch = 0; ch < 3; ch++) {
+            const v = (at(gx, gy, ch) * (1 - tx) + at(gx + 1, gy, ch) * tx) * (1 - ty) + (at(gx, gy + 1, ch) * (1 - tx) + at(gx + 1, gy + 1, ch) * tx) * ty;
+            local[ch] = v;
+            diff = Math.max(diff, light ? v - d[i + ch] : d[i + ch] - v);
+          }
+          const a = Math.min(1, Math.max(0, (diff - t0) / span));
+          if (a > 0 && a < 1) for (let ch = 0; ch < 3; ch++) d[i + ch] = Math.min(255, Math.max(0, (d[i + ch] - local[ch] * (1 - a)) / a));
+          d[i + 3] = Math.round(d[i + 3] * a);
+        }
+      }
+    }
+
+    function tryRebuildArt() {
+      if (!tryState.artSrc) return;
+      const r = tryPrepareArt(tryState.artSrc, tryState.bgOn, tryState.bgTol);
+      Object.assign(tryState, { art: r.canvas, artOpaque: r.opaque, artSmall: null });
+      tryUpdateUi(); tryDraw();
+    }
+    function trySetArt(img) {
+      tryState.artSrc = img; tryState.mesh = null; tryState.meshEdit = false;
+      tryRebuildArt();
     }
 
     function tryLoadPhoto(input) {
@@ -3281,9 +3576,9 @@
       if (!f) return;
       const src = safeImageUrl(f.image) || ('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(String(f.svg || '')));
       tryLoadImage(src, img => {
-        tryState.art = tryTrimArt(img); tryState.artId = f.id;
+        tryState.artId = f.id;
         if (f.cm) tryState.sizeCm = tryClampCm(Number(f.cm));
-        tryUpdateUi(); tryDraw();
+        trySetArt(img);
       }, () => tryHint('Não consegui carregar a imagem desse flash.'));
     }
 
@@ -3294,8 +3589,9 @@
       const url = URL.createObjectURL(file);
       tryLoadImage(url, img => {
         if (tryState.artUrl) URL.revokeObjectURL(tryState.artUrl);
-        Object.assign(tryState, { art: tryTrimArt(img), artUrl: url, artId: '__own' });
-        tryUpdateUi(); tryDraw();
+        Object.assign(tryState, { artUrl: url, artId: '__own' });
+        trySetArt(img);
+        if (tryState.artOpaque && tryState.bgOn) tryHint('Tirei o fundo do desenho. Ajuste a "Limpeza" se precisar.');
       }, () => { URL.revokeObjectURL(url); tryHint('Não consegui abrir esse desenho.'); });
     }
 
@@ -3308,11 +3604,115 @@
       tryEl('tryCm').value = tryState.sizeCm; tryEl('tryCmOut').textContent = String(tryState.sizeCm).replace('.', ',') + ' cm';
       tryEl('tryRot').value = tryState.rot; tryEl('tryRotOut').textContent = tryState.rot + '°';
       tryEl('tryOpacity').value = Math.round(tryState.opacity * 100); tryEl('tryOpacityOut').textContent = Math.round(tryState.opacity * 100) + '%';
-      tryEl('tryDownloadBtn').disabled = !(tryState.step === 2 && tryState.art);
+      const ready = tryState.step === 2 && !!tryState.art;
+      tryEl('tryDownloadBtn').disabled = !ready;
+      tryEl('tryQuoteBtn').disabled = !ready;
+      tryEl('tryMeshBtn').disabled = !ready; tryEl('tryMeshReset').disabled = !tryMeshActive();
+      tryEl('tryMeshBtn').classList.toggle('is-on', tryState.meshEdit);
+      tryEl('tryMeshBtn').textContent = tryState.meshEdit ? 'Pronto, fixar malha' : 'Encaixar no corpo (malha)';
+      tryEl('tryBgBox').classList.toggle('hidden', !(tryState.art && tryState.artOpaque));
+      tryEl('tryBgOn').checked = tryState.bgOn; tryEl('tryBgTol').value = tryState.bgTol; tryEl('tryBgTolOut').textContent = tryState.bgTol;
+      const dm = tryArtDimsCm();
+      tryEl('tryDims').textContent = dm ? `Traço: ${tryFmtCm(dm.w)} × ${tryFmtCm(dm.h)} cm (largura × altura)` : '';
     }
 
-    // Desenha a arte já em escala real: o maior lado do desenho mede sizeCm
-    function tryPaintArt(ctx, s, ox, oy) {
+    const tryFmtCm = v => (Math.round(v * 10) / 10).toFixed(1).replace('.', ',');
+    function tryArtDimsCm() {
+      const art = tryState.art; if (!art) return null;
+      const aw = art.naturalWidth || art.width, ah = art.naturalHeight || art.height, m = Math.max(aw, ah);
+      return { w: tryState.sizeCm * aw / m, h: tryState.sizeCm * ah / m };
+    }
+
+    // ----- Malha 3×3: cada ponto guarda a posição no desenho (0 a 1); sem malha = grade reta -----
+    const tryLag = t => [2 * (t - 0.5) * (t - 1), -4 * t * (t - 1), 2 * t * (t - 0.5)];
+    function tryMeshAt(u, v) {
+      const M = tryState.mesh; if (!M) return { x: u, y: v };
+      const lu = tryLag(u), lv = tryLag(v); let x = 0, y = 0;
+      for (let j = 0; j < 3; j++) for (let i = 0; i < 3; i++) { const w = lu[i] * lv[j], n = (j * 3 + i) * 2; x += w * M[n]; y += w * M[n + 1]; }
+      return { x, y };
+    }
+    function tryMeshActive() {
+      const M = tryState.mesh; if (!M) return false;
+      for (let n = 0; n < 9; n++) if (Math.abs(M[n * 2] - (n % 3) / 2) > 1e-4 || Math.abs(M[n * 2 + 1] - Math.floor(n / 3) / 2) > 1e-4) return true;
+      return false;
+    }
+    function tryToggleMesh() {
+      if (!tryState.art) return;
+      if (!tryState.mesh) { tryState.mesh = []; for (let n = 0; n < 9; n++) tryState.mesh.push((n % 3) / 2, Math.floor(n / 3) / 2); }
+      tryState.meshEdit = !tryState.meshEdit;
+      tryHint(tryState.meshEdit ? 'Puxe os pontos para curvar o desenho. Arrastar fora dos pontos move tudo.' : 'Malha fixada.');
+      tryUpdateUi(); tryDraw();
+    }
+    function tryResetMesh() { tryState.mesh = null; tryState.meshEdit = false; tryUpdateUi(); tryDraw(); }
+    function tryArtScale() { // pixels da foto por pixel do desenho
+      const art = tryState.art, ppc = tryPxPerCm(); if (!art || !ppc) return 0;
+      return tryState.sizeCm * ppc / Math.max(art.naturalWidth || art.width, art.naturalHeight || art.height);
+    }
+    function tryArtToScreen(nx, ny) {
+      const art = tryState.art, k = tryArtScale(), r = tryState.rot * Math.PI / 180;
+      const lx = (nx - 0.5) * (art.naturalWidth || art.width) * k, ly = (ny - 0.5) * (art.naturalHeight || art.height) * k;
+      return tryToScreen({ x: tryState.cx + lx * Math.cos(r) - ly * Math.sin(r), y: tryState.cy + lx * Math.sin(r) + ly * Math.cos(r) });
+    }
+    function tryScreenToArt(pt) {
+      const art = tryState.art, k = tryArtScale() || 1, r = -tryState.rot * Math.PI / 180, p = tryToPhoto(pt);
+      const dx = p.x - tryState.cx, dy = p.y - tryState.cy;
+      const lx = dx * Math.cos(r) - dy * Math.sin(r), ly = dx * Math.sin(r) + dy * Math.cos(r);
+      return { x: lx / ((art.naturalWidth || art.width) * k) + 0.5, y: ly / ((art.naturalHeight || art.height) * k) + 0.5 };
+    }
+    function tryNearestNode(pt) {
+      if (!tryState.mesh) return -1;
+      let best = -1, bd = 30;
+      for (let n = 0; n < 9; n++) { const q = tryArtToScreen(tryState.mesh[n * 2], tryState.mesh[n * 2 + 1]), dd = Math.hypot(q.x - pt.x, q.y - pt.y); if (dd < bd) { bd = dd; best = n; } }
+      return best;
+    }
+    // Versão menor do desenho para desenhar a malha rápido na tela
+    function tryArtFor(px) {
+      const art = tryState.art, m = Math.max(art.naturalWidth || art.width, art.naturalHeight || art.height);
+      const want = Math.min(m, Math.max(64, Math.round(px * 1.25)));
+      if (want >= m * 0.9) return art;
+      const c = tryState.artSmall;
+      if (c && Math.abs(c.wantPx - want) / want < 0.35) return c;
+      const k = want / m, out = document.createElement('canvas');
+      out.width = Math.max(1, Math.round((art.naturalWidth || art.width) * k)); out.height = Math.max(1, Math.round((art.naturalHeight || art.height) * k));
+      out.getContext('2d').drawImage(art, 0, 0, out.width, out.height); out.wantPx = want;
+      return tryState.artSmall = out;
+    }
+    // Desenha o desenho deformado pela malha em triângulos (cada um é um pedaço da imagem esticado)
+    function tryWarp(src, aw, ah, scale, res) {
+      const N = 12, sw = src.naturalWidth || src.width, sh = src.naturalHeight || src.height, P = [];
+      let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+      for (let j = 0; j <= N; j++) for (let i = 0; i <= N; i++) {
+        const m = tryMeshAt(i / N, j / N), x = (m.x - 0.5) * aw * scale, y = (m.y - 0.5) * ah * scale;
+        P.push(x, y); minX = Math.min(minX, x); minY = Math.min(minY, y); maxX = Math.max(maxX, x); maxY = Math.max(maxY, y);
+      }
+      minX -= 2; minY -= 2; maxX += 2; maxY += 2;
+      const c = document.createElement('canvas');
+      c.width = Math.max(1, Math.min(6000, Math.ceil((maxX - minX) * res))); c.height = Math.max(1, Math.min(6000, Math.ceil((maxY - minY) * res)));
+      const g = c.getContext('2d');
+      const D = n => [(P[n * 2] - minX) * res, (P[n * 2 + 1] - minY) * res];
+      const S = (i, j) => [i / N * sw, j / N * sh];
+      const tri = (s0, s1, s2, d0, d1, d2) => {
+        const [x0, y0] = s0, [x1, y1] = s1, [x2, y2] = s2, [u0, v0] = d0, [u1, v1] = d1, [u2, v2] = d2;
+        const den = (x1 - x0) * (y2 - y0) - (x2 - x0) * (y1 - y0); if (!den) return;
+        const a = ((u1 - u0) * (y2 - y0) - (u2 - u0) * (y1 - y0)) / den, cc = ((u2 - u0) * (x1 - x0) - (u1 - u0) * (x2 - x0)) / den;
+        const b = ((v1 - v0) * (y2 - y0) - (v2 - v0) * (y1 - y0)) / den, dd = ((v2 - v0) * (x1 - x0) - (v1 - v0) * (x2 - x0)) / den;
+        const mx = (u0 + u1 + u2) / 3, my = (v0 + v1 + v2) / 3, grow = (u, v) => { const l = Math.hypot(u - mx, v - my) || 1; return [u + (u - mx) / l * 0.7, v + (v - my) / l * 0.7]; };
+        g.save(); g.setTransform(1, 0, 0, 1, 0, 0); g.beginPath();
+        const q0 = grow(u0, v0), q1 = grow(u1, v1), q2 = grow(u2, v2);
+        g.moveTo(q0[0], q0[1]); g.lineTo(q1[0], q1[1]); g.lineTo(q2[0], q2[1]); g.closePath(); g.clip();
+        g.setTransform(a, b, cc, dd, u0 - a * x0 - cc * y0, v0 - b * x0 - dd * y0);
+        g.drawImage(src, 0, 0); g.restore();
+      };
+      for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) {
+        const n0 = j * (N + 1) + i, n1 = n0 + 1, n2 = n0 + N + 1, n3 = n2 + 1;
+        tri(S(i, j), S(i + 1, j), S(i, j + 1), D(n0), D(n1), D(n2));
+        tri(S(i + 1, j), S(i + 1, j + 1), S(i, j + 1), D(n1), D(n3), D(n2));
+      }
+      return { canvas: c, x: minX, y: minY, w: c.width / res, h: c.height / res };
+    }
+
+    // Desenha a arte já em escala real: o maior lado do traço mede sizeCm (sem contar a malha)
+    function tryPaintArt(ctx, s, ox, oy, res = 1, preview = false) {
       const art = tryState.art, ppc = tryPxPerCm();
       if (!art || !ppc) return;
       const aw = art.naturalWidth || art.width || 300, ah = art.naturalHeight || art.height || 300;
@@ -3320,10 +3720,16 @@
       ctx.save();
       ctx.translate(ox + tryState.cx * s, oy + tryState.cy * s);
       ctx.rotate(tryState.rot * Math.PI / 180);
-      ctx.scale(k * s, k * s);
       ctx.globalAlpha = tryState.opacity;
       if (tryState.ink) ctx.globalCompositeOperation = 'multiply'; // fundo branco some, traço escurece a pele
-      ctx.drawImage(art, -aw / 2, -ah / 2, aw, ah);
+      if (tryMeshActive()) {
+        const scale = k * s, src = preview ? tryArtFor(Math.max(aw, ah) * scale * res) : art;
+        const wp = tryWarp(src, aw, ah, scale, res);
+        ctx.drawImage(wp.canvas, wp.x, wp.y, wp.w, wp.h);
+      } else {
+        ctx.scale(k * s, k * s);
+        ctx.drawImage(art, -aw / 2, -ah / 2, aw, ah);
+      }
       ctx.restore();
       return { w: aw * k * s, h: ah * k * s };
     }
@@ -3361,26 +3767,69 @@
           ctx.fillStyle = '#F4F4F6'; ctx.fillText(label, mx, my + 2);
         }
         if (tryState.step === 2 && tryState.art) {
-          const size = tryPaintArt(ctx, s, v.ox, v.oy);
-          if (size) { // contorno tracejado só na tela (não sai na imagem baixada)
+          const size = tryPaintArt(ctx, s, v.ox, v.oy, dpr, true);
+          if (size && tryState.meshEdit && tryState.mesh) { // malha: linhas e pontos só na tela
+            ctx.save(); ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(123,163,216,.7)'; ctx.setLineDash([4, 4]);
+            for (const t of [0, 0.5, 1]) for (const dir of [0, 1]) {
+              ctx.beginPath();
+              for (let q = 0; q <= 16; q++) { const m = dir ? tryMeshAt(t, q / 16) : tryMeshAt(q / 16, t), P = tryArtToScreen(m.x, m.y); q ? ctx.lineTo(P.x, P.y) : ctx.moveTo(P.x, P.y); }
+              ctx.stroke();
+            }
+            ctx.setLineDash([]);
+            for (let n = 0; n < 9; n++) {
+              const P = tryArtToScreen(tryState.mesh[n * 2], tryState.mesh[n * 2 + 1]);
+              ctx.beginPath(); ctx.arc(P.x, P.y, 11, 0, Math.PI * 2); ctx.fillStyle = 'rgba(123,163,216,.25)'; ctx.fill();
+              ctx.beginPath(); ctx.arc(P.x, P.y, 4.5, 0, Math.PI * 2); ctx.fillStyle = '#F4F4F6'; ctx.fill(); ctx.lineWidth = 1.5; ctx.strokeStyle = '#070709'; ctx.stroke();
+            }
+            ctx.restore();
+          } else if (size && !tryMeshActive()) { // contorno tracejado só na tela (não sai na imagem baixada)
             ctx.save(); ctx.translate(v.ox + tryState.cx * s, v.oy + tryState.cy * s); ctx.rotate(tryState.rot * Math.PI / 180);
             ctx.setLineDash([5, 6]); ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(244,244,246,.45)';
             ctx.strokeRect(-size.w / 2 - 6, -size.h / 2 - 6, size.w + 12, size.h + 12); ctx.restore();
+          }
+          const dm = tryArtDimsCm();
+          if (dm) { // medida do traço no rodapé do palco
+            const txt = `traço ${tryFmtCm(dm.w)} × ${tryFmtCm(dm.h)} cm` + (tryMeshActive() ? ' (sem malha)' : '');
+            ctx.font = '600 11px "JetBrains Mono", monospace'; ctx.textAlign = 'center';
+            const tw = ctx.measureText(txt).width + 18;
+            ctx.fillStyle = 'rgba(7,7,9,.72)'; ctx.fillRect(r.width / 2 - tw / 2, r.height - 30, tw, 20);
+            ctx.fillStyle = '#F4F4F6'; ctx.fillText(txt, r.width / 2, r.height - 16);
           }
         }
       });
     }
 
     // "Baixar imagem": monta foto + arte no próprio aparelho e salva como arquivo. Nada é enviado.
-    function tryDownload() {
+    function tryComposite(maxSide) {
       const photo = tryState.photo;
-      if (!photo || !tryState.art) return;
-      const pw = photo.naturalWidth, ph = photo.naturalHeight, k = Math.min(1, 3000 / Math.max(pw, ph));
+      const pw = photo.naturalWidth, ph = photo.naturalHeight, k = Math.min(1, maxSide / Math.max(pw, ph));
       const c = document.createElement('canvas');
       c.width = Math.round(pw * k); c.height = Math.round(ph * k);
       const ctx = c.getContext('2d');
       ctx.drawImage(photo, 0, 0, c.width, c.height);
       tryPaintArt(ctx, k, 0, 0);
+      return c;
+    }
+
+    // "Levar pro orçamento": a montagem vai para a ficha (fica só na memória desta aba até a pessoa enviar)
+    function trySendToQuote() {
+      if (!(tryState.step === 2 && tryState.art && tryState.photo)) return;
+      const c = tryComposite(1400), dm = tryArtDimsCm();
+      const f = FLASHES.find(item => String(item.id) === String(tryState.artId));
+      try {
+        c.toBlob(blob => {
+          if (!blob) { tryHint('Não consegui gerar a prévia.'); return; }
+          quoteFromTryOn({ blob, w: dm.w, h: dm.h, size: tryState.sizeCm, mesh: tryMeshActive(), flash: f || null });
+        }, 'image/jpeg', 0.86);
+      } catch (e) {
+        tryHint('Essa arte vem de outro site e o navegador não deixa usar a montagem. Tire um print da tela.');
+      }
+    }
+
+    function tryDownload() {
+      const photo = tryState.photo;
+      if (!photo || !tryState.art) return;
+      const c = tryComposite(3000);
       try {
         c.toBlob(blob => {
           if (!blob) { tryHint('Não consegui gerar a imagem.'); return; }
@@ -3398,7 +3847,7 @@
     function tryReset() {
       if (tryState.photoUrl) URL.revokeObjectURL(tryState.photoUrl);
       if (tryState.artUrl) URL.revokeObjectURL(tryState.artUrl);
-      Object.assign(tryState, { step: 0, photo: null, photoUrl: null, a: null, b: null, art: null, artUrl: null, artId: '', cx: 0, cy: 0, sizeCm: 10, rot: 0, opacity: 0.88 });
+      Object.assign(tryState, { step: 0, photo: null, photoUrl: null, a: null, b: null, art: null, artSrc: null, artSmall: null, artOpaque: false, artUrl: null, artId: '', cx: 0, cy: 0, sizeCm: 10, rot: 0, opacity: 0.88, mesh: null, meshEdit: false });
       tryEl('tryStage').classList.remove('has-photo');
       tryFillArtOptions();
       tryHint('Tudo apagado. Nenhuma foto ficou guardada.');
