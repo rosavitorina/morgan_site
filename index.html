@@ -635,7 +635,18 @@
     @keyframes labelNudge { 0%, 100% { translate: 0 -50%; } 50% { translate: -5px -50%; } }
     @media (max-width: 639px) { .orb.orb-heart { width: 64px; height: 64px; } .orb-heart .orb-ico { width: 42px; height: 42px; } }
     @media (prefers-reduced-motion: reduce) { .orb-heart::after, .orb-heart.is-new .orb-label, html body header.sticky > div::before, html body header.sticky > div::after { animation: none; } }
-  </style>
+      /* Instagram no menu: no celular ocupa o espaço entre "morgan" e "agendar" */
+    html body header.sticky .nav-insta { display: inline-flex; align-items: center; gap: .35rem; flex-shrink: 0; padding: .4rem .55rem; border-radius: 999px;
+      color: #F4F4F6; border: 1px solid rgba(123, 163, 216, .35); background: rgba(123, 163, 216, .08); font: 600 11px "JetBrains Mono", monospace; letter-spacing: .03em;
+      transition: border-color .3s, background .3s, box-shadow .3s; }
+    html body header.sticky .nav-insta .ico { width: 16px; height: 16px; color: #7BA3D8; }
+    html body header.sticky .nav-insta:hover, html body header.sticky .nav-insta:focus-visible { border-color: rgba(244, 244, 246, .7); background: rgba(123, 163, 216, .18); box-shadow: 0 0 18px -4px rgba(123, 163, 216, .7); }
+    html body header.sticky .nav-insta-txt { display: none; }
+    @media (max-width: 639px) {
+      html body header.sticky .nav-insta { margin-left: auto; }
+      html body header.sticky .nav-insta-txt { display: inline; }
+    }
+</style>
 
 
 </head>
@@ -1038,6 +1049,10 @@
           </a>
         </nav>
 
+        <a href="https://www.instagram.com/_morgantattoo/" target="_blank" rel="noopener noreferrer" class="nav-insta" aria-label="Instagram da Morgan (@_morgantattoo)">
+          <svg class="ico" aria-hidden="true"><use href="#i-insta"/></svg><span class="nav-insta-txt">_morgantattoo</span>
+        </a>
+
         <a href="#orcamento" onclick="showPage('orcamento'); return false;" class="bg-alabaster text-obsidian hover:bg-white px-3 py-1.5 rounded-sm font-serif lowercase tracking-[0.16em] text-xs sm:text-sm font-bold transition shrink-0 flex items-center gap-1">
           <span>agendar</span>
           <svg class="ico text-xs" aria-hidden="true"><use href="#i-arrow"/></svg>
@@ -1182,6 +1197,10 @@
           </a>
         </nav>
 
+        <a href="https://www.instagram.com/_morgantattoo/" target="_blank" rel="noopener noreferrer" class="nav-insta" aria-label="Instagram da Morgan (@_morgantattoo)">
+          <svg class="ico" aria-hidden="true"><use href="#i-insta"/></svg><span class="nav-insta-txt">_morgantattoo</span>
+        </a>
+
         <a href="#orcamento" onclick="showPage('orcamento'); return false;" class="bg-alabaster text-obsidian hover:bg-white px-3 py-1.5 rounded-sm font-serif lowercase tracking-[0.16em] text-xs sm:text-sm font-bold transition shrink-0 flex items-center gap-1">
           <span>agendar</span>
           <svg class="ico text-xs" aria-hidden="true"><use href="#i-arrow"/></svg>
@@ -1250,6 +1269,10 @@
             Pós-Tattoo
           </a>
         </nav>
+
+        <a href="https://www.instagram.com/_morgantattoo/" target="_blank" rel="noopener noreferrer" class="nav-insta" aria-label="Instagram da Morgan (@_morgantattoo)">
+          <svg class="ico" aria-hidden="true"><use href="#i-insta"/></svg><span class="nav-insta-txt">_morgantattoo</span>
+        </a>
 
         <a href="#orcamento" onclick="showPage('orcamento'); return false;" class="bg-alabaster text-obsidian hover:bg-white px-3 py-1.5 rounded-sm font-serif lowercase tracking-[0.16em] text-xs sm:text-sm font-bold transition shrink-0 flex items-center gap-1">
           <span>agendar</span>
@@ -1468,6 +1491,10 @@
           </a>
         </nav>
 
+        <a href="https://www.instagram.com/_morgantattoo/" target="_blank" rel="noopener noreferrer" class="nav-insta" aria-label="Instagram da Morgan (@_morgantattoo)">
+          <svg class="ico" aria-hidden="true"><use href="#i-insta"/></svg><span class="nav-insta-txt">_morgantattoo</span>
+        </a>
+
         <a href="#orcamento" onclick="showPage('orcamento'); return false;" class="bg-alabaster text-obsidian hover:bg-white px-3 py-1.5 rounded-sm font-serif lowercase tracking-[0.16em] text-xs sm:text-sm font-bold transition shrink-0 flex items-center gap-1">
           <span>agendar</span>
           <svg class="ico text-xs" aria-hidden="true"><use href="#i-arrow"/></svg>
@@ -1591,6 +1618,10 @@
             Pós-Tattoo
           </a>
         </nav>
+
+        <a href="https://www.instagram.com/_morgantattoo/" target="_blank" rel="noopener noreferrer" class="nav-insta" aria-label="Instagram da Morgan (@_morgantattoo)">
+          <svg class="ico" aria-hidden="true"><use href="#i-insta"/></svg><span class="nav-insta-txt">_morgantattoo</span>
+        </a>
 
         <a href="#orcamento" onclick="showPage('orcamento'); return false;" class="bg-alabaster text-obsidian hover:bg-white px-3 py-1.5 rounded-sm font-serif lowercase tracking-[0.16em] text-xs sm:text-sm font-bold transition shrink-0 flex items-center gap-1">
           <span>agendar</span>
