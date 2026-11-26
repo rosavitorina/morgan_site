@@ -10,3 +10,4 @@ Site oficial da Morgan Tattoo — Portfólio, Flashes e Agendamento.
 - `assets/js/`: Tailwind
 - `assets/img/`: logo, `portfolio/`, `flashes/` e `fundos/` (artes da Morgan usadas como fundo das seções, em WebP)
 - `data/items.js`: flashes, portfólio, depoimentos e a tabela de preços do orçamento publicados (o site lê este arquivo; o botão "Salvar no site" do painel grava nele e copia as imagens). O painel "Gerenciar conteúdo" só aparece quando o `index.html` é aberto do PC (arquivo local ou localhost); no site publicado ele não existe, nem com `?admin` na URL. Depoimentos só entram pelo painel (com a autorização da pessoa); visitantes mandam o relato pelo Instagram.
+- `contador/`: servidor do contador de corações de todos os visitantes (Cloudflare Worker + D1). O `LEIA-ME.md` ensina a montar pelo celular; depois o endereço vai em `HEARTS_API` no `index.html`. Sem ele, cada aparelho conta só os próprios toques.
