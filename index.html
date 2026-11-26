@@ -1560,12 +1560,12 @@
                 <div class="try-range"><label for="tryBgTol">Limpeza</label><input id="tryBgTol" type="range" min="4" max="80" step="1" value="22" onchange="tryState.bgTol = +this.value; tryRebuildArt()"><output id="tryBgTolOut">22</output></div>
                 <p class="text-[11px] text-mist mt-1">Se sumir parte do traço, diminua. Se sobrar sujeira do papel, aumente.</p>
               </div>
-              <div class="try-range"><label for="tryCm">Tamanho</label><input id="tryCm" type="range" min="1" max="45" step="0.5" value="10" oninput="tryState.sizeCm = +this.value; tryUpdateUi(); tryDraw()"><output id="tryCmOut">10 cm</output></div>
+              <div class="try-range"><label for="tryCm">Tamanho <small class="text-mist">(lado maior)</small></label><input id="tryCm" type="range" min="1" max="45" step="0.5" value="10" oninput="tryState.sizeCm = +this.value; tryUpdateUi(); tryDraw()"><output id="tryCmOut">10 cm</output></div>
               <div class="try-range"><label for="tryRot">Giro</label><input id="tryRot" type="range" min="-180" max="180" step="1" value="0" oninput="tryState.rot = +this.value; tryUpdateUi(); tryDraw()"><output id="tryRotOut">0°</output></div>
               <div class="try-range"><label for="tryOpacity">Tinta</label><input id="tryOpacity" type="range" min="30" max="100" step="1" value="88" oninput="tryState.opacity = this.value / 100; tryUpdateUi(); tryDraw()"><output id="tryOpacityOut">88%</output></div>
               <label class="flex items-center gap-2 text-xs text-mist mt-1"><input id="tryInk" type="checkbox" checked onchange="tryState.ink = this.checked; tryDraw()" class="accent-alabaster"> Misturar com a pele (efeito tinta)</label>
               <p id="tryDims" class="try-dims"></p>
-              <p class="text-[11px] text-mist mt-1">O tamanho vale para o traço do desenho (sem a margem vazia), pelo lado maior.</p>
+              <p class="text-[11px] text-mist mt-1">O tamanho vale para o traço do desenho (sem a margem vazia), pelo lado maior. As réguas no desenho mostram a largura e a altura.</p>
               <p class="text-[11px] text-mist mt-2">No celular: arraste com um dedo, use dois dedos para aumentar e girar. No computador: arraste, e use a rodinha (com Shift, gira).</p>
               <div class="try-sub">
                 <div class="flex flex-wrap gap-2">
@@ -2916,7 +2916,42 @@
     // =========================================================
     // MINI-GAME GÓTICO: "ESTIVE AQUI" (ALMAS, COMBO & CONQUISTAS)
     // =========================================================
-    let GOTH_HEARTS_COUNT = (() => {
+    // Contador de corações de todos os visitantes (servidor no Cloudflare, ver contador/LEIA-ME.md).
+    // Vazio = cada aparelho conta só os próprios toques, como antes.
+    const HEARTS_API = '';
+    const heartsSync = { pending: 0, timer: 0, busy: false };
+    function heartsApply(total) {
+      if (!Number.isFinite(total) || total < 0) return;
+      GOTH_HEARTS_COUNT = total + heartsSync.pending; // inclui os toques que ainda não foram enviados
+      renderGothHeartCount();
+    }
+    async function heartsLoad() {
+      if (!HEARTS_API) return;
+      try { const r = await fetch(HEARTS_API, { cache: 'no-store' }); if (r.ok) heartsApply((await r.json()).total); } catch (e) {}
+    }
+    function heartsQueue() { // junta os toques e manda de uma vez, 1,5 s depois do último
+      if (!HEARTS_API) return;
+      heartsSync.pending++; clearTimeout(heartsSync.timer); heartsSync.timer = setTimeout(heartsFlush, 1500);
+    }
+    async function heartsFlush() {
+      if (!HEARTS_API || heartsSync.busy || !heartsSync.pending) return;
+      const n = Math.min(heartsSync.pending, 30); heartsSync.pending -= n; heartsSync.busy = true;
+      let wait = 1500;
+      try {
+        const r = await fetch(HEARTS_API, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: String(n), keepalive: true });
+        if (r.ok) heartsApply((await r.json()).total); // recusado (muitos toques seguidos): não insiste
+      } catch (e) { heartsSync.pending += n; wait = 10000; } // sem internet: tenta de novo depois
+      heartsSync.busy = false;
+      if (heartsSync.pending) { clearTimeout(heartsSync.timer); heartsSync.timer = setTimeout(heartsFlush, wait); }
+    }
+    window.addEventListener('pagehide', () => { // saiu da página: manda o que faltou
+      if (!HEARTS_API || !heartsSync.pending || !navigator.sendBeacon) return;
+      navigator.sendBeacon(HEARTS_API, new Blob([String(Math.min(heartsSync.pending, 30))], { type: 'text/plain' }));
+      heartsSync.pending = 0;
+    });
+    window.addEventListener('DOMContentLoaded', heartsLoad);
+
+    let GOTH_HEARTS_COUNT = HEARTS_API ? 0 : (() => {
       try {
         const saved = parseInt(localStorage.getItem('morgan_goth_hearts_v1'), 10);
         return Number.isFinite(saved) ? saved : 42;
@@ -3204,8 +3239,9 @@
       if (gothWidget) { gothWidget.classList.add('hud-open'); clearTimeout(window.__hudTimer); window.__hudTimer = setTimeout(() => gothWidget.classList.remove('hud-open'), 6000); }
       GOTH_HEARTS_COUNT++;
       GOTH_USER_CLICKS++;
+      heartsQueue();
       try {
-        localStorage.setItem('morgan_goth_hearts_v1', GOTH_HEARTS_COUNT);
+        if (!HEARTS_API) localStorage.setItem('morgan_goth_hearts_v1', GOTH_HEARTS_COUNT);
         localStorage.setItem('morgan_user_clicks_v2', GOTH_USER_CLICKS);
       } catch (err) {}
 
@@ -3861,14 +3897,40 @@
               ctx.beginPath(); ctx.arc(P.x, P.y, 4.5, 0, Math.PI * 2); ctx.fillStyle = '#F4F4F6'; ctx.fill(); ctx.lineWidth = 1.5; ctx.strokeStyle = '#070709'; ctx.stroke();
             }
             ctx.restore();
-          } else if (size && !tryMeshActive()) { // contorno tracejado só na tela (não sai na imagem baixada)
-            ctx.save(); ctx.translate(v.ox + tryState.cx * s, v.oy + tryState.cy * s); ctx.rotate(tryState.rot * Math.PI / 180);
-            ctx.setLineDash([5, 6]); ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(244,244,246,.45)';
-            ctx.strokeRect(-size.w / 2 - 6, -size.h / 2 - 6, size.w + 12, size.h + 12); ctx.restore();
+          } else if (size && !tryMeshActive()) { // contorno e réguas só na tela (não saem na imagem baixada)
+            const dmr = tryArtDimsCm(), rot = tryState.rot * Math.PI / 180, hw = size.w / 2, hh = size.h / 2;
+            ctx.save(); ctx.translate(v.ox + tryState.cx * s, v.oy + tryState.cy * s); ctx.rotate(rot);
+            ctx.setLineDash([5, 6]); ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(244,244,246,.4)';
+            ctx.strokeRect(-hw, -hh, size.w, size.h); ctx.setLineDash([]);
+            // régua: linha com pontas, encostada no traço, e a medida sempre de pé para ler
+            const ruler = (x0, y0, x1, y1, tx, ty, label) => {
+              ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(7,7,9,.6)';
+              ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
+              ctx.lineWidth = 1.4; ctx.strokeStyle = '#7BA3D8';
+              ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
+              const nx = y0 === y1 ? 0 : 5, ny = y0 === y1 ? 5 : 0;
+              ctx.beginPath(); ctx.moveTo(x0 - nx, y0 - ny); ctx.lineTo(x0 + nx, y0 + ny); ctx.moveTo(x1 - nx, y1 - ny); ctx.lineTo(x1 + nx, y1 + ny); ctx.stroke();
+              labels.push({ x: v.ox + tryState.cx * s + tx * Math.cos(rot) - ty * Math.sin(rot), y: v.oy + tryState.cy * s + tx * Math.sin(rot) + ty * Math.cos(rot), label });
+            };
+            const labels = [];
+            if (dmr) {
+              ruler(-hw, -hh - 9, hw, -hh - 9, 0, -hh - 22, `↔ ${tryFmtCm(dmr.w)} cm`);
+              ruler(hw + 9, -hh, hw + 9, hh, hw + 9 + 36, 0, `↕ ${tryFmtCm(dmr.h)} cm`);
+            }
+            ctx.restore();
+            // medidas sempre de pé e dentro da tela
+            ctx.font = '600 11px "JetBrains Mono", monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            for (const L of labels) {
+              const w = ctx.measureText(L.label).width + 10;
+              const x = Math.min(r.width - w / 2 - 4, Math.max(w / 2 + 4, L.x)), y = Math.min(r.height - 44, Math.max(13, L.y));
+              ctx.fillStyle = 'rgba(7,7,9,.82)'; ctx.fillRect(x - w / 2, y - 9, w, 18);
+              ctx.fillStyle = '#F4F4F6'; ctx.fillText(L.label, x, y + 1);
+            }
+            ctx.textBaseline = 'alphabetic';
           }
           const dm = tryArtDimsCm();
           if (dm) { // medida do traço no rodapé do palco
-            const txt = `traço ${tryFmtCm(dm.w)} × ${tryFmtCm(dm.h)} cm` + (tryMeshActive() ? ' (sem malha)' : '');
+            const txt = `largura ${tryFmtCm(dm.w)} · altura ${tryFmtCm(dm.h)} cm` + (tryMeshActive() ? ' (sem malha)' : '');
             ctx.font = '600 11px "JetBrains Mono", monospace'; ctx.textAlign = 'center';
             const tw = ctx.measureText(txt).width + 18;
             ctx.fillStyle = 'rgba(7,7,9,.72)'; ctx.fillRect(r.width / 2 - tw / 2, r.height - 30, tw, 20);
