@@ -308,7 +308,6 @@
     #gothMiniGameWidget.hud-open #gothMiniHud { display: flex; }
     body:not(.admin-on) #gothMiniGameWidget { bottom: 1rem !important; right: 1rem !important; }
     @media (max-width: 639px) {
-      #gothHeartBtn { width: auto; }
       /* menu no celular: marca e "agendar" em cima, as 4 páginas numa segunda linha, todas visíveis */
       header.sticky > div { flex-wrap: wrap; row-gap: .5rem; }
       header.sticky nav.no-scrollbar { order: 3; width: 100%; justify-content: space-between; overflow: visible; }
@@ -606,6 +605,38 @@
     .quote-try img { width: 84px; height: 84px; object-fit: cover; border-radius: 10px; flex: none; }
     .price-grid input { width: 100%; min-width: 0; background: #070709; border: 1px solid rgba(255, 255, 255, .15); padding: .3rem .4rem; font: 12px 'JetBrains Mono', monospace; color: #fff; }
   </style>
+  <style id="v4">
+    /* Menu: filigranas nas pontas da pílula, em branco e azul */
+    html body header.sticky > div { position: relative; isolation: isolate; overflow: hidden; }
+    html body header.sticky > div::before, html body header.sticky > div::after {
+      content: ""; position: absolute; z-index: -1; pointer-events: none; top: -26px; width: 150px; aspect-ratio: 560 / 510;
+      background: linear-gradient(135deg, #F4F4F6 10%, #7BA3D8 55%, #2c4a7a);
+      -webkit-mask: url(./assets/img/fundos/filigrana.webp) no-repeat center / contain;
+              mask: url(./assets/img/fundos/filigrana.webp) no-repeat center / contain;
+      opacity: .42; animation: navFili 7s ease-in-out infinite;
+    }
+    html body header.sticky > div::before { left: -34px; }
+    html body header.sticky > div::after { right: -34px; transform: scaleX(-1); animation-delay: -3.5s; }
+    @keyframes navFili { 0%, 100% { opacity: .42; } 50% { opacity: .72; } }
+    @media (max-width: 639px) { html body header.sticky > div::before, html body header.sticky > div::after { width: 120px; top: -22px; } }
+
+    /* Coração: maior, preto e gótico sobre uma lua prateada, com ondas chamando para tocar */
+    .orb.orb-heart { width: 70px; height: 70px;
+      background: radial-gradient(circle at 36% 30%, #ffffff, #d9dfeb 32%, #8f9bb5 64%, #3a4560 100%);
+      border-color: rgba(244, 244, 246, .7);
+      box-shadow: 0 14px 34px -8px rgba(0, 0, 0, .95), 0 0 34px -6px rgba(170, 190, 225, .75), inset -6px -8px 16px rgba(0, 0, 0, .35); }
+    .orb-heart .orb-ico { width: 46px; height: 46px; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .55)); }
+    .orb-heart::after { content: ""; position: absolute; inset: 0; border-radius: 50%; pointer-events: none;
+      border: 2px solid rgba(200, 215, 240, .75); animation: heartRipple 2.4s cubic-bezier(.2, .7, .3, 1) infinite; }
+    @keyframes heartRipple { 0% { transform: scale(1); opacity: .8; } 100% { transform: scale(1.65); opacity: 0; } }
+    .orb-heart .orb-count { top: -4px; right: -4px; }
+    /* Antes do primeiro toque, o convite fica visível */
+    .orb-heart.is-new .orb-label { opacity: 1; translate: 0 -50%; animation: labelNudge 2.4s ease-in-out infinite; }
+    @keyframes labelNudge { 0%, 100% { translate: 0 -50%; } 50% { translate: -5px -50%; } }
+    @media (max-width: 639px) { .orb.orb-heart { width: 64px; height: 64px; } .orb-heart .orb-ico { width: 42px; height: 42px; } }
+    @media (prefers-reduced-motion: reduce) { .orb-heart::after, .orb-heart.is-new .orb-label, html body header.sticky > div::before, html body header.sticky > div::after { animation: none; } }
+  </style>
+
 
 </head>
 <body class="antialiased selection:bg-alabaster selection:text-obsidian">
@@ -918,12 +949,20 @@
     <!-- Botão Principal de Clique -->
     <!-- Botão redondo do coração (sem caixa): o total de almas fica numa bolinha no canto -->
     <button type="button" id="gothHeartBtn" onclick="spawnGothHeart(event)" class="orb orb-heart" aria-label="Estive aqui: deixar uma alma">
-      <svg id="gothHeartIcon" class="orb-ico" viewBox="0 0 24 24" aria-hidden="true">
-        <defs><linearGradient id="heartInk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b1d2c"/><stop offset="1" stop-color="#14060a"/></linearGradient></defs>
-        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="url(#heartInk)" stroke="#F4F4F6" stroke-width="1.2" stroke-linejoin="round"/>
+      <svg id="gothHeartIcon" class="orb-ico" viewBox="0 0 40 40" aria-hidden="true">
+        <defs><linearGradient id="heartInk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a2a33"/><stop offset=".55" stop-color="#0b0b0e"/><stop offset="1" stop-color="#000"/></linearGradient></defs>
+        <!-- cruz saindo do topo -->
+        <path d="M20 1.2v12M15.4 5.2h9.2" stroke="#070709" stroke-width="2.6" stroke-linecap="square"/>
+        <path d="M20.6 2v10.6M16.2 4.7h8.2" stroke="#F4F4F6" stroke-width=".5" opacity=".35"/>
+        <!-- coração gótico com espinhos nas laterais -->
+        <path d="M20 15.2C18.2 10.6 12.6 9.6 9.6 11.8 6.4 14.1 6 18.6 7.6 22.4 9.6 27.2 14.6 31.6 20 38.6c5.4-7 10.4-11.4 12.4-16.2 1.6-3.8 1.2-8.3-2-10.6-3-2.2-8.6-1.2-10.4 3.4z" fill="url(#heartInk)" stroke="#070709" stroke-width="1.2" stroke-linejoin="round"/>
+        <path d="M6.6 17.2l-2.6-.6 2.9 2.4M33.4 17.2l2.6-.6-2.9 2.4" fill="#070709" stroke="#070709" stroke-width="1" stroke-linejoin="round"/>
+        <!-- brilho e coroa de espinhos -->
+        <path d="M11.2 16.6c.5-2.4 2.8-3.6 5-2.8" fill="none" stroke="#F4F4F6" stroke-width=".9" stroke-linecap="round" opacity=".55"/>
+        <path d="M8.6 22.8c3.6 1.7 7.6 2.3 11.4 2.3s7.8-.6 11.4-2.3" fill="none" stroke="#7BA3D8" stroke-width=".9" stroke-dasharray="1.4 1.6" opacity=".8"/>
       </svg>
       <span id="gothHeartCount" class="orb-count">42</span>
-      <span class="orb-label">estive aqui</span>
+      <span class="orb-label">toque aqui</span>
     </button>
   </div>
 
@@ -2914,7 +2953,16 @@
       };
     }
 
+    window.addEventListener('DOMContentLoaded', () => {
+      const hb = document.getElementById('gothHeartBtn');
+      if (!hb || GOTH_USER_CLICKS) return;
+      hb.classList.add('is-new');
+      setTimeout(() => hb.classList.remove('is-new'), 7000);
+    });
+
     function renderGothHeartCount() {
+      const hb = document.getElementById('gothHeartBtn');
+      if (hb && GOTH_USER_CLICKS) hb.classList.remove('is-new');
       const el = document.getElementById('gothHeartCount');
       if (el) el.textContent = GOTH_HEARTS_COUNT;
 
