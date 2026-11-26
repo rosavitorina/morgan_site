@@ -660,6 +660,29 @@
     .try-tools .try-tools-x { padding: 0 11px; color: #9A9AA8; }
     @keyframes toolsIn { from { opacity: 0; translate: -50% -8px; } to { opacity: 1; translate: -50% 0; } }
     @media (prefers-reduced-motion: reduce) { .try-tools { animation: none; } }
+    /* Menu: Instagram à esquerda e a logo numa lua prateada (fica visível no fundo escuro) */
+    html body header.sticky .nav-logo { flex-shrink: 0; display: grid; place-items: center; width: 46px; height: 46px; margin-block: -6px; border-radius: 50%;
+      background: radial-gradient(circle at 36% 30%, #ffffff, #e6eaf2 45%, #aab5ca 78%, #6b7891 100%);
+      border: 1px solid rgba(244, 244, 246, .75); box-shadow: 0 6px 18px -6px rgba(0, 0, 0, .9), 0 0 20px -6px rgba(170, 190, 225, .8), inset -4px -5px 10px rgba(0, 0, 0, .25);
+      transition: transform .4s var(--ease), box-shadow .4s; }
+    html body header.sticky .nav-logo img { width: 40px; height: 40px; object-fit: contain; }
+    html body header.sticky .nav-logo:hover, html body header.sticky .nav-logo:focus-visible { transform: rotate(-8deg) scale(1.06); box-shadow: 0 6px 18px -6px rgba(0, 0, 0, .9), 0 0 28px -4px rgba(170, 190, 225, 1); }
+    @media (max-width: 639px) {
+      html body header.sticky .nav-insta { margin-left: 0; }
+      html body header.sticky .nav-logo { margin-inline: auto; }
+    }
+    @media (min-width: 640px) {
+      html body header.sticky > div { justify-content: flex-start; }
+      html body header.sticky .nav-logo { margin-left: .35rem; }
+      html body header.sticky nav.no-scrollbar { margin-inline: auto; }
+    }
+    @media (min-width: 640px) and (max-width: 959px) { /* tablet: sem ícones nas páginas para caber tudo */
+      html body header.sticky nav.no-scrollbar .ico { display: none; }
+      html body header.sticky nav.no-scrollbar a { padding-inline: .5rem; letter-spacing: .04em; }
+    }
+    @media (min-width: 640px) and (max-width: 719px) {
+      html body header.sticky nav.no-scrollbar a { padding-inline: .3rem; letter-spacing: .01em; }
+    }
 </style>
 
 
@@ -759,7 +782,10 @@
             <label class="text-xs text-mist space-y-1">Preço fixo (R$) *
               <input id="adminFlashPrice" required="" type="number" min="1" step="1" class="w-full bg-obsidian border border-white/15 p-2.5 text-sm text-white" placeholder="680">
             </label>
-            
+            <label class="text-xs text-mist space-y-1">Tamanho sugerido (cm, lado maior do traço)
+              <input id="adminFlashCm" type="number" min="1" max="45" step="0.5" value="15" class="w-full bg-obsidian border border-white/15 p-2.5 text-sm text-white" placeholder="15">
+            </label>
+
           </div>
 
           <!-- Upload do PC para Flash -->
@@ -1041,8 +1067,12 @@
     <header class="sticky top-3 z-50 px-3 sm:px-6 my-2">
       <div class="max-w-4xl mx-auto backdrop-blur-xl bg-charcoal/90 border border-white/20 rounded-sm px-3 sm:px-5 py-2.5 shadow-[0_16px_40px_rgba(0,0,0,0.85)] flex items-center justify-between gap-2">
         
-        <a href="#home" onclick="showPage('home'); return false;" class="morgan-wordmark text-xs sm:text-sm text-alabaster font-semibold tracking-[0.22em] shrink-0">
-          morgan
+        <a href="https://www.instagram.com/_morgantattoo/" target="_blank" rel="noopener noreferrer" class="nav-insta" aria-label="Instagram da Morgan (@_morgantattoo)">
+          <svg class="ico" aria-hidden="true"><use href="#i-insta"/></svg><span class="nav-insta-txt">_morgantattoo</span>
+        </a>
+
+        <a href="#home" onclick="showPage('home'); return false;" class="nav-logo" aria-label="Morgan Tattoo: página inicial">
+          <img src="./assets/img/logo3ideia4.png" alt="" width="40" height="40" decoding="async">
         </a>
 
         <nav class="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5" aria-label="Navegação Principal">
@@ -1062,10 +1092,6 @@
             Pós-Tattoo
           </a>
         </nav>
-
-        <a href="https://www.instagram.com/_morgantattoo/" target="_blank" rel="noopener noreferrer" class="nav-insta" aria-label="Instagram da Morgan (@_morgantattoo)">
-          <svg class="ico" aria-hidden="true"><use href="#i-insta"/></svg><span class="nav-insta-txt">_morgantattoo</span>
-        </a>
 
         <a href="#orcamento" onclick="showPage('orcamento'); return false;" class="bg-alabaster text-obsidian hover:bg-white px-3 py-1.5 rounded-sm font-serif lowercase tracking-[0.16em] text-xs sm:text-sm font-bold transition shrink-0 flex items-center gap-1">
           <span>agendar</span>
@@ -1189,8 +1215,12 @@
     <header class="sticky top-3 z-50 px-3 sm:px-6 my-2">
       <div class="max-w-4xl mx-auto backdrop-blur-xl bg-charcoal/90 border border-white/20 rounded-sm px-3 sm:px-5 py-2.5 shadow-[0_16px_40px_rgba(0,0,0,0.85)] flex items-center justify-between gap-2">
         
-        <a href="#home" onclick="showPage('home'); return false;" class="morgan-wordmark text-xs sm:text-sm text-alabaster font-semibold tracking-[0.22em] shrink-0">
-          morgan
+        <a href="https://www.instagram.com/_morgantattoo/" target="_blank" rel="noopener noreferrer" class="nav-insta" aria-label="Instagram da Morgan (@_morgantattoo)">
+          <svg class="ico" aria-hidden="true"><use href="#i-insta"/></svg><span class="nav-insta-txt">_morgantattoo</span>
+        </a>
+
+        <a href="#home" onclick="showPage('home'); return false;" class="nav-logo" aria-label="Morgan Tattoo: página inicial">
+          <img src="./assets/img/logo3ideia4.png" alt="" width="40" height="40" decoding="async">
         </a>
 
         <nav class="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5" aria-label="Navegação Principal">
@@ -1210,10 +1240,6 @@
             Pós-Tattoo
           </a>
         </nav>
-
-        <a href="https://www.instagram.com/_morgantattoo/" target="_blank" rel="noopener noreferrer" class="nav-insta" aria-label="Instagram da Morgan (@_morgantattoo)">
-          <svg class="ico" aria-hidden="true"><use href="#i-insta"/></svg><span class="nav-insta-txt">_morgantattoo</span>
-        </a>
 
         <a href="#orcamento" onclick="showPage('orcamento'); return false;" class="bg-alabaster text-obsidian hover:bg-white px-3 py-1.5 rounded-sm font-serif lowercase tracking-[0.16em] text-xs sm:text-sm font-bold transition shrink-0 flex items-center gap-1">
           <span>agendar</span>
@@ -1262,8 +1288,12 @@
     <header class="sticky top-3 z-50 px-3 sm:px-6 my-2">
       <div class="max-w-4xl mx-auto backdrop-blur-xl bg-charcoal/90 border border-white/20 rounded-sm px-3 sm:px-5 py-2.5 shadow-[0_16px_40px_rgba(0,0,0,0.85)] flex items-center justify-between gap-2">
         
-        <a href="#home" onclick="showPage('home'); return false;" class="morgan-wordmark text-xs sm:text-sm text-alabaster font-semibold tracking-[0.22em] shrink-0">
-          morgan
+        <a href="https://www.instagram.com/_morgantattoo/" target="_blank" rel="noopener noreferrer" class="nav-insta" aria-label="Instagram da Morgan (@_morgantattoo)">
+          <svg class="ico" aria-hidden="true"><use href="#i-insta"/></svg><span class="nav-insta-txt">_morgantattoo</span>
+        </a>
+
+        <a href="#home" onclick="showPage('home'); return false;" class="nav-logo" aria-label="Morgan Tattoo: página inicial">
+          <img src="./assets/img/logo3ideia4.png" alt="" width="40" height="40" decoding="async">
         </a>
 
         <nav class="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5" aria-label="Navegação Principal">
@@ -1283,10 +1313,6 @@
             Pós-Tattoo
           </a>
         </nav>
-
-        <a href="https://www.instagram.com/_morgantattoo/" target="_blank" rel="noopener noreferrer" class="nav-insta" aria-label="Instagram da Morgan (@_morgantattoo)">
-          <svg class="ico" aria-hidden="true"><use href="#i-insta"/></svg><span class="nav-insta-txt">_morgantattoo</span>
-        </a>
 
         <a href="#orcamento" onclick="showPage('orcamento'); return false;" class="bg-alabaster text-obsidian hover:bg-white px-3 py-1.5 rounded-sm font-serif lowercase tracking-[0.16em] text-xs sm:text-sm font-bold transition shrink-0 flex items-center gap-1">
           <span>agendar</span>
@@ -1483,8 +1509,12 @@
     <header class="sticky top-3 z-50 px-3 sm:px-6 my-2">
       <div class="max-w-4xl mx-auto backdrop-blur-xl bg-charcoal/90 border border-white/20 rounded-sm px-3 sm:px-5 py-2.5 shadow-[0_16px_40px_rgba(0,0,0,0.85)] flex items-center justify-between gap-2">
         
-        <a href="#home" onclick="showPage('home'); return false;" class="morgan-wordmark text-xs sm:text-sm text-alabaster font-semibold tracking-[0.22em] shrink-0">
-          morgan
+        <a href="https://www.instagram.com/_morgantattoo/" target="_blank" rel="noopener noreferrer" class="nav-insta" aria-label="Instagram da Morgan (@_morgantattoo)">
+          <svg class="ico" aria-hidden="true"><use href="#i-insta"/></svg><span class="nav-insta-txt">_morgantattoo</span>
+        </a>
+
+        <a href="#home" onclick="showPage('home'); return false;" class="nav-logo" aria-label="Morgan Tattoo: página inicial">
+          <img src="./assets/img/logo3ideia4.png" alt="" width="40" height="40" decoding="async">
         </a>
 
         <nav class="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5" aria-label="Navegação Principal">
@@ -1504,10 +1534,6 @@
             Pós-Tattoo
           </a>
         </nav>
-
-        <a href="https://www.instagram.com/_morgantattoo/" target="_blank" rel="noopener noreferrer" class="nav-insta" aria-label="Instagram da Morgan (@_morgantattoo)">
-          <svg class="ico" aria-hidden="true"><use href="#i-insta"/></svg><span class="nav-insta-txt">_morgantattoo</span>
-        </a>
 
         <a href="#orcamento" onclick="showPage('orcamento'); return false;" class="bg-alabaster text-obsidian hover:bg-white px-3 py-1.5 rounded-sm font-serif lowercase tracking-[0.16em] text-xs sm:text-sm font-bold transition shrink-0 flex items-center gap-1">
           <span>agendar</span>
@@ -1619,8 +1645,12 @@
     <header class="sticky top-3 z-50 px-3 sm:px-6 my-2">
       <div class="max-w-4xl mx-auto backdrop-blur-xl bg-charcoal/90 border border-white/20 rounded-sm px-3 sm:px-5 py-2.5 shadow-[0_16px_40px_rgba(0,0,0,0.85)] flex items-center justify-between gap-2">
         
-        <a href="#home" onclick="showPage('home'); return false;" class="morgan-wordmark text-xs sm:text-sm text-alabaster font-semibold tracking-[0.22em] shrink-0">
-          morgan
+        <a href="https://www.instagram.com/_morgantattoo/" target="_blank" rel="noopener noreferrer" class="nav-insta" aria-label="Instagram da Morgan (@_morgantattoo)">
+          <svg class="ico" aria-hidden="true"><use href="#i-insta"/></svg><span class="nav-insta-txt">_morgantattoo</span>
+        </a>
+
+        <a href="#home" onclick="showPage('home'); return false;" class="nav-logo" aria-label="Morgan Tattoo: página inicial">
+          <img src="./assets/img/logo3ideia4.png" alt="" width="40" height="40" decoding="async">
         </a>
 
         <nav class="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5" aria-label="Navegação Principal">
@@ -1640,10 +1670,6 @@
             Pós-Tattoo
           </a>
         </nav>
-
-        <a href="https://www.instagram.com/_morgantattoo/" target="_blank" rel="noopener noreferrer" class="nav-insta" aria-label="Instagram da Morgan (@_morgantattoo)">
-          <svg class="ico" aria-hidden="true"><use href="#i-insta"/></svg><span class="nav-insta-txt">_morgantattoo</span>
-        </a>
 
         <a href="#orcamento" onclick="showPage('orcamento'); return false;" class="bg-alabaster text-obsidian hover:bg-white px-3 py-1.5 rounded-sm font-serif lowercase tracking-[0.16em] text-xs sm:text-sm font-bold transition shrink-0 flex items-center gap-1">
           <span>agendar</span>
@@ -2631,7 +2657,9 @@
       event.preventDefault();
       const title = document.getElementById('adminFlashTitle').value.trim();
       const price = Number(document.getElementById('adminFlashPrice').value);
-      const cm = 15, zone = 'Antebraço', cat = 'todos'; // tamanho, região e categoria saíram do painel: valores neutros só para o orçamento
+      const cmIn = Number(document.getElementById('adminFlashCm')?.value);
+      const cm = Number.isFinite(cmIn) && cmIn >= 1 && cmIn <= 45 ? cmIn : 15; // tamanho sugerido: o Provador e o orçamento começam nele
+      const zone = 'Antebraço', cat = 'todos'; // região e categoria saíram do painel: valores neutros só para o orçamento
       const base64Img = document.getElementById('adminFlashImageBase64')?.value.trim();
       const rawImage = document.getElementById('adminFlashImage').value.trim();
       const image = base64Img || safeImageUrl(rawImage);
@@ -2676,6 +2704,7 @@
       document.getElementById('adminFlashId').value = flash.id;
       document.getElementById('adminFlashTitle').value = flash.title || '';
       document.getElementById('adminFlashPrice').value = flash.price || '';
+      document.getElementById('adminFlashCm').value = flash.cm || 15;
 
       const img = flash.image || '';
       if (img.startsWith('data:image/')) {
