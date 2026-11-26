@@ -33,7 +33,7 @@ window.SITE_ITEMS = {
     },
     {
       "id": "FL-1795000000002",
-      "title": "Criatura Alada",
+      "title": "Chrysalis",
       "price": 450,
       "cm": 8,
       "zone": "Antebraço",
